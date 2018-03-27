@@ -1,11 +1,16 @@
 package com.saviorru.comsserver.cli;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class  CommandRules {
 
     private Map<String, List<ArgumentType>> parsingRules;
+
+    public CommandRules(){
+        this.parsingRules = new HashMap<>();
+    }
 
     public void addParsingRule(String commandName, List<ArgumentType> fieldsType) throws Exception {
         if (commandName.isEmpty()) throw new Exception("Empty command name");
