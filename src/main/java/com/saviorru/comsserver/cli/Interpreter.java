@@ -10,16 +10,17 @@ public class Interpreter {
     private Map<String, CommandInfo> commandsMap;
     private CommandFactory commandFactory;
     private TournamentBuilder tournamentBuilder;
+    private CommandRules commandRules;
 
 
     public Interpreter() throws Exception {
         initCommandsMap();
-        parser = new CommandParser();
         tournamentBuilder = new TournamentBuilder();
         commandFactory = new CommandFactory(tournamentBuilder);
         for (Map.Entry<String, CommandInfo> entry : this.commandsMap.entrySet()) {
-            parser.addParsingRule(entry.getKey(), entry.getValue().getArgumentsList());
+            commandRules.addParsingRule(entry.getKey(), entry.getValue().getArgumentsList());
         }
+        parser = new CommandParser(commandRules);
     }
 
 

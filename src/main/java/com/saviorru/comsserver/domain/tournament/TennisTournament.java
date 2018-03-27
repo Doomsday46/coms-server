@@ -10,6 +10,10 @@ import com.saviorru.comsserver.domain.schedule.ScheduleGenerator;
 import com.saviorru.comsserver.domain.schedule.ScheduleGeneratorImpl;
 import com.saviorru.comsserver.domain.schematictype.*;
 import com.saviorru.comsserver.domain.winnerindetifier.WinnerIdentifier;
+import com.saviorru.comsserver.exceptions.EmptyParameter;
+import com.saviorru.comsserver.exceptions.FinishTournamentException;
+import com.saviorru.comsserver.exceptions.StartTournamentException;
+import sun.invoke.empty.Empty;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -78,14 +82,14 @@ public class TennisTournament implements Tournament {
     }
 
     @Override
-    public Schedule getSchedule() throws Exception {
-        if (!isStart) throw new Exception("Tournament is not started");
+    public Schedule getSchedule() throws StartTournamentException {
+        if (!isStart) throw new StartTournamentException("Tournament is not started");
         return this.schedule;
     }
 
     @Override
-    public List<Location> getLocations() throws Exception {
-        if (isStart) throw new Exception("Tournament is not started");
+    public List<Location> getLocations() throws StartTournamentException {
+        if (isStart) throw new StartTournamentException("Tournament is not started");
         return locationDispatcher.getAllLocations();
     }
 
@@ -106,16 +110,16 @@ public class TennisTournament implements Tournament {
     @Override
     public void finish() throws Exception {
         if (this.isStart) {
-            if (schedule.getMatchesByState(MatchState.PLAYED).size() == 0) throw new Exception("Matches didn't played");
+            if (schedule.getMatchesByState(MatchState.PLAYED).size() == 0) throw new FinishTournamentException("Matches didn't played");
             if (this.schedule.getAllMatches().size() != this.scheduleGenerator.getScheme().getMaxPairCount())
-                throw new Exception("All pair are not not played yet");
+                return;
             List<Player> winners = this.winnerIdentifier.identifyWinners(schedule.getAllMatches());
             for (int i = 0; i < this.tournamentSettings.getPrizePlacesCount(); i++) {
                 this.prizePlaces.add(new PrizePlaceThePlayer(winners.get(i), i + 1));
             }
             tournamentSettings.getDateDispatcher().setEndDate(LocalDateTime.now());
         } else
-            throw new Exception("Tournament is not started");
+            throw new FinishTournamentException("Tournament is not started");
     }
 
     @Override

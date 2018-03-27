@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ScheduleGeneratorImpl implements ScheduleGenerator {
+
     private PlayerDispatcher playerDispatcher;
     private LocationDispatcher locationDispatcher;
     private DateDispatcher dateDispatcher;
@@ -56,7 +57,7 @@ public class ScheduleGeneratorImpl implements ScheduleGenerator {
         return existingSchedule;
     }
     @Override
-    public Schedule updateSchedule(Match match, Schedule existingSchedule) throws Exception {
+    public Schedule updateSchedule(Match match, Schedule existingSchedule) throws Exception{
         if (match== null || existingSchedule == null) throw new NullPointerException();
         List<Integer> winnersList = new ArrayList<>();
         winnersList.add(playerDispatcher.getPlayerNumber(match.getWinner()));

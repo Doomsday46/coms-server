@@ -13,10 +13,10 @@ public class OneOnOneMatch implements Match {
     private MatchState matchState = MatchState.NOTPLAYED;
     private Location location;
 
-    public OneOnOneMatch(Player firstSide, Player secondSide, Location location, LocalDateTime date) throws Exception {
+    public OneOnOneMatch(Player firstSide, Player secondSide, Location location, LocalDateTime date){
         if (firstSide == null || secondSide == null || location == null || date == null)
             throw new NullPointerException();
-        if(firstSide.equals(secondSide)) throw new Exception("Player can't be for 2 sides simultaneously");
+        if(firstSide.equals(secondSide)) throw new IllegalArgumentException("Player can't be for 2 sides simultaneously");
         this.firstSide = firstSide;
         this.secondSide = secondSide;
         this.location = location;

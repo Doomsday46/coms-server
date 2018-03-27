@@ -1,8 +1,6 @@
 package com.saviorru.comsserver.cli;
 
-import com.saviorru.comsserver.cli.command.Command;
 import com.saviorru.comsserver.domain.schematictype.SchemeType;
-import javafx.util.Pair;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -10,21 +8,11 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class CommandParser {
-    private CommandParameter commandParameter;
-    private Map<String, List<ArgumentType>> parsingRules;
+    private CommandRules commandRules;
 
-    public CommandParser(){
-        parsingRules = new HashMap<>();
+    public CommandParser(CommandRules commandRules){
+        this.commandRules = commandRules;
     }
-
-    public void addParsingRule(String commandName, List<ArgumentType> fieldsType) throws Exception {
-        if (commandName.isEmpty()) throw new Exception("Empty command name");
-        if (fieldsType == null) throw new NullPointerException("Null argument types list");
-        if (this.parsingRules.containsKey(commandName))
-            throw new Exception("Parsing rule for this command already exists");
-        this.parsingRules.put(commandName, fieldsType);
-    }
-
 
     public CommandParameter parse(String commandLine) throws Exception {
         if (commandLine.isEmpty()) return null;
@@ -35,9 +23,9 @@ public class CommandParser {
         List<String> rawArguments = new ArrayList<>();
         if (parts.size() > 1)
             rawArguments = new ArrayList<String>(Arrays.asList(parts.get(1).split(",")));
-        if (!(this.parsingRules.containsKey(commandString)))
+        if (!(commandRules.containsRule(commandString)))
             throw new Exception("Invalid command");
-        List<ArgumentType> argumentTypes = this.parsingRules.get(commandString);
+        List<ArgumentType> argumentTypes = commandRules.getArgumentType(commandString);
         List<Object> parsedArguments = new ArrayList<>();
         if (rawArguments.size() != argumentTypes.size())
             throw new Exception("Invalid arguments count");

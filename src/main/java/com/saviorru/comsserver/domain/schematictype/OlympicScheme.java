@@ -1,6 +1,8 @@
 package com.saviorru.comsserver.domain.schematictype;
 
+import com.saviorru.comsserver.exceptions.EmptyParameter;
 import javafx.util.Pair;
+import sun.invoke.empty.Empty;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -22,8 +24,8 @@ public class OlympicScheme implements Scheme {
     private Integer countPlayers;
     private List<Pair<Integer, Integer>> givenPairsPlayers;
 
-    public OlympicScheme(Integer countPlayers) throws Exception {
-        if (countPlayers < 2) throw new Exception("Incorrect number of players");
+    public OlympicScheme(Integer countPlayers){
+        if (countPlayers < 2) throw new IllegalArgumentException("Incorrect number of players");
         this.root = new Node();
         this.root.nextPositionPlayer = this.root;
         this.countRounds = countTour(countPlayers);
@@ -91,16 +93,14 @@ public class OlympicScheme implements Scheme {
         }
     }
 
-    private Node addPlayersNextTour(Node node) {
+    private void addPlayersNextTour(Node node) {
         if (node.nextPositionPlayer.rightPlayer.data == null || node.nextPositionPlayer.leftPlayer.data == null) {
             if (!checkLackPartner(node.nextPositionPlayer) || checkPartner(node.nextPositionPlayer)) {
                 if (node.nextPositionPlayer.data == null) {
                     node.nextPositionPlayer.data = node.data;
-                    return node.nextPositionPlayer;
                 }
             }
         }
-        return node;
     }
 
     private boolean checkPartner(Node node) {
@@ -232,8 +232,8 @@ public class OlympicScheme implements Scheme {
     }
 
     @Override
-    public List<Pair<Integer, Integer>> getAllPairsInTour(Integer tourNumber) throws Exception {
-        if (tourNumber < 0 || tourNumber > this.countRounds) throw new Exception("Tour out of range");
+    public List<Pair<Integer, Integer>> getAllPairsInTour(Integer tourNumber) {
+        if (tourNumber < 0 || tourNumber > this.countRounds) throw new IndexOutOfBoundsException("Tour out of range");
         List<Pair<Integer, Integer>> list = getTheRound(tourNumber);
         return list;
     }
@@ -250,9 +250,9 @@ public class OlympicScheme implements Scheme {
     }
 
     @Override
-    public void updateScheme(List<Integer> winnersList) throws Exception {
+    public void updateScheme(List<Integer> winnersList) throws EmptyParameter {
         if (winnersList == null) throw new NullPointerException();
-        if (winnersList.isEmpty()) throw new Exception("Empty list winner");
+        if (winnersList.isEmpty()) throw new EmptyParameter("Empty list winner");
         createSchedule(winnersList, this.children);
     }
 

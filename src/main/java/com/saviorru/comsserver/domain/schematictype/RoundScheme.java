@@ -37,7 +37,7 @@ public class RoundScheme implements Scheme
         throw new Exception("Cant find specified pair");
 
     }
-    private List<List<Meet>> buildScheme(Integer playersCount) throws  Exception
+    private List<List<Meet>> buildScheme(Integer playersCount)
     {
         List<List<Meet>> toursList = new ArrayList<>();
         for (int i = 0; i < playersCount - 1; i++) {
@@ -66,7 +66,7 @@ public class RoundScheme implements Scheme
     }
 
     @Override
-    public Pair<Integer, Integer> getNextNotPlayedPair() throws Exception {
+    public Pair<Integer, Integer> getNextNotPlayedPair(){
         for (List<Meet> tour: this.toursList)
         {
             for (Meet meet: tour) {
@@ -80,7 +80,7 @@ public class RoundScheme implements Scheme
     }
 
     @Override
-    public List<Pair<Integer, Integer>> getAllPairsInTour(Integer tourNumber) throws Exception {
+    public List<Pair<Integer, Integer>> getAllPairsInTour(Integer tourNumber){
         if (tourNumber == null) throw new NullPointerException();
         if (tourNumber > this.toursList.size()-1 || tourNumber < 0) throw new ArrayIndexOutOfBoundsException();
         List<Pair<Integer, Integer>>  tour = new ArrayList<>();
@@ -178,11 +178,11 @@ public class RoundScheme implements Scheme
             return assigned;
         }
 
-        public Meet(Integer firstNumber, Integer secondNumber) throws Exception {
+        public Meet(Integer firstNumber, Integer secondNumber){
             if ((firstNumber == null) || (secondNumber == null))
                 throw new NullPointerException();
             if (firstNumber.equals(secondNumber))
-                throw new Exception("Duplicate numbers in one meet is not allowed");
+                throw new DuplicateFormatFlagsException("Duplicate numbers in one meet is not allowed");
             this.firstNumber = firstNumber;
             this.secondNumber = secondNumber;
             this.assigned = false;
@@ -196,9 +196,8 @@ public class RoundScheme implements Scheme
             return this.secondNumber;
         }
 
-        public void assign() throws Exception {
-            if (this.isAssigned())
-                throw new Exception("Meet is already assigned");
+        public void assign()  {
+            if (this.isAssigned()) return;
             this.assigned = true;
         }
 

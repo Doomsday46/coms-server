@@ -12,14 +12,14 @@ public class OlympicGrid implements PlayerGrid {
     private final Integer SPACE_CYRCLE = 7;
     private final Integer STEP_CYRCLE = 13;
 
-    public OlympicGrid(List<List<Integer>> matrix) throws Exception {
+    public OlympicGrid(List<List<Integer>> matrix) {
         if (matrix == null) throw new NullPointerException();
         this.matrix = matrix;
     }
 
     @Override
-    public List<Integer> getNumbersByTour(Integer tour) throws Exception {
-        if (tour < 1 || tour - 1 > matrix.size()) throw new Exception("Value of non-range");
+    public List<Integer> getNumbersByTour(Integer tour) {
+        if (tour < 1 || tour - 1 > matrix.size()) throw new IndexOutOfBoundsException();
         return matrix.get(tour - 1);
     }
 

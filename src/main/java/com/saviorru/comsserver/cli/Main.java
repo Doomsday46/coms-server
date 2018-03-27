@@ -22,7 +22,7 @@ public class Main {
                 System.out.print(output);
                 System.out.print("\n");
             } catch(Exception e){
-               e.getStackTrace();
+               System.out.println(Arrays.toString(e.getStackTrace()));
             }
             if(command.equals("exit")) break;
         }

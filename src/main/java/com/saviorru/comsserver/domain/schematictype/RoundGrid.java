@@ -9,13 +9,13 @@ public class RoundGrid implements PlayerGrid {
     private List<List<Integer>> matrix;
 
 
-    public RoundGrid(List<List<Integer>> matrix) throws Exception {
+    public RoundGrid(List<List<Integer>> matrix){
         if (matrix == null) throw new NullPointerException();
         this.matrix = matrix;
     }
 
     @Override
-    public List<Integer> getNumbersByTour(Integer tour) throws Exception {
+    public List<Integer> getNumbersByTour(Integer tour){
         if (tour == null) throw new NullPointerException();
         if (tour > matrix.size()-1 || tour < 0) throw new IndexOutOfBoundsException();
         return matrix.get(tour);

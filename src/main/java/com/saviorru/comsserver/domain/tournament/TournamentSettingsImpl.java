@@ -9,6 +9,7 @@ import com.saviorru.comsserver.domain.schematictype.SchemeType;
 import com.saviorru.comsserver.domain.winnerindetifier.OlympicWinnerIndentifier;
 import com.saviorru.comsserver.domain.winnerindetifier.RoundWinnerIdentifier;
 import com.saviorru.comsserver.domain.winnerindetifier.WinnerIdentifier;
+import com.saviorru.comsserver.exceptions.EmptyParameter;
 
 import java.time.LocalDateTime;
 
@@ -20,9 +21,9 @@ public class TournamentSettingsImpl implements TournamentSettings {
     private Integer prizePlacesCount;
 
     public TournamentSettingsImpl(String tournamentName, SchemeType schemeType, LocalDateTime startDate, TimeSettings timeSettings)
-    throws Exception {
+    throws EmptyParameter {
         if (schemeType == null || startDate == null || timeSettings == null) throw new NullPointerException();
-        if (tournamentName.isEmpty()) throw new Exception("Empty tournament name");
+        if (tournamentName.isEmpty()) throw new EmptyParameter("Empty tournament name");
         this.schemeType = schemeType;
         this.startDate = startDate;
         this.timeSettings = timeSettings;
