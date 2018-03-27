@@ -26,20 +26,20 @@ public class CommandParserTest {
     @Test()
     public void parserValidTest() throws Exception
     {
-        Pair<String, List<String>> pair = testSubject.parse("help");
-        assertEquals("help", pair.getKey());
+        CommandParameter commandParameter = testSubject.parse("help");
+        assertEquals("help", commandParameter.getNameCommand());
     }
     @Test()
     public void parserValidComplexCommandTest() throws Exception
     {
-        Pair<String, List<String>> pair = testSubject.parse("addplayer: Igor, Savochkin, 1978-10-01");
-        assertEquals("addplayer", pair.getKey());
+        CommandParameter commandParameter = testSubject.parse("addplayer: Igor, Savochkin, 1978-10-01");
+        assertEquals("addplayer",commandParameter.getNameCommand());
     }
     @Test(expected = Exception.class)
     public void parserInvalidTest() throws Exception
     {
-        Pair<String, List<String>> pair = testSubject.parse("find: Igor, Savochkin, 1978-10-01");
-        assertEquals("addplayer", pair.getKey());
+        CommandParameter commandParameter = testSubject.parse("find: Igor, Savochkin, 1978-10-01");
+        assertEquals("addplayer", commandParameter.getNameCommand());
     }
 
 }

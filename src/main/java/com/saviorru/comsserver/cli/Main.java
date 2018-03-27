@@ -10,19 +10,19 @@ public class Main {
     public static void main(String[] args) throws Exception {
         Scanner scanner = new Scanner(System.in);
         String command = "";
-        ConsoleController controller = new ConsoleController();
+        Interpreter controller = new Interpreter();
         while(true){
 
             System.out.print("Введите команду: ");
             command = scanner.nextLine();
 
             try {
-                String output = controller.parseAndExecute(command);
+                String output = controller.parse(command);
                 System.out.print("\n");
                 System.out.print(output);
                 System.out.print("\n");
             } catch(Exception e){
-               System.out.println(Arrays.toString(e.getStackTrace()));
+               e.getStackTrace();
             }
             if(command.equals("exit")) break;
         }

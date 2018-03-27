@@ -1,36 +1,19 @@
 package com.saviorru.comsserver.cli.command;
 
-import com.saviorru.comsserver.cli.RuntimeEnvironment;
-import com.saviorru.comsserver.domain.tournament.TennisTournament;
-import com.saviorru.comsserver.domain.tournament.Tournament;
+import com.saviorru.comsserver.cli.TournamentBuilder;
 
 public class CreateTennisTournamentCommand implements Command {
 
-    private RuntimeEnvironment env;
+    private TournamentBuilder tournamentBuilder;
 
-    public CreateTennisTournamentCommand(RuntimeEnvironment env) {
-        this.env = env;
-    }
-
-    @Override
-    public void backup() {
-
+    public CreateTennisTournamentCommand(TournamentBuilder tournamentBuilder) {
+        this.tournamentBuilder = tournamentBuilder;
     }
 
     @Override
     public Boolean execute() throws Exception {
-        Tournament tournament = new TennisTournament(env.getPlayerDispatcher(), env.getLocationDispatcher(), env.getTournamentSettings(), env.getSchedule());
-        env.setTournament(tournament);
+        tournamentBuilder.build();
         return true;
     }
 
-    @Override
-    public String nameCommand() {
-        return "create tournament";
-    }
-
-    @Override
-    public String commandFormat() {
-        return "command: type tournament";
-    }
 }

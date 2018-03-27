@@ -1,26 +1,32 @@
 package com.saviorru.comsserver.cli;
 
+import com.saviorru.comsserver.cli.command.Command;
+import com.saviorru.comsserver.domain.schematictype.SchemeType;
 import javafx.util.Pair;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class CommandParser {
+    private CommandParameter commandParameter;
     private Map<String, List<ArgumentType>> parsingRules;
 
-    public CommandParser() {
+    public CommandParser(){
         parsingRules = new HashMap<>();
     }
 
     public void addParsingRule(String commandName, List<ArgumentType> fieldsType) throws Exception {
         if (commandName.isEmpty()) throw new Exception("Empty command name");
-        if (fieldsType == null) throw new Exception("Null argument types list");
+        if (fieldsType == null) throw new NullPointerException("Null argument types list");
         if (this.parsingRules.containsKey(commandName))
             throw new Exception("Parsing rule for this command already exists");
         this.parsingRules.put(commandName, fieldsType);
     }
 
 
-    public Pair<String, List<String>> parse(String commandLine) throws Exception {
+    public CommandParameter parse(String commandLine) throws Exception {
         if (commandLine.isEmpty()) return null;
         List<String> parts = new ArrayList<String>(Arrays.asList(commandLine.split(":")));
         String commandString = parts.get(0);
@@ -32,7 +38,7 @@ public class CommandParser {
         if (!(this.parsingRules.containsKey(commandString)))
             throw new Exception("Invalid command");
         List<ArgumentType> argumentTypes = this.parsingRules.get(commandString);
-        List<String> parsedArguments = new ArrayList<>();
+        List<Object> parsedArguments = new ArrayList<>();
         if (rawArguments.size() != argumentTypes.size())
             throw new Exception("Invalid arguments count");
         for (int i = 0; i < argumentTypes.size(); i++) {
@@ -52,80 +58,48 @@ public class CommandParser {
                 case ALPHA_DIGIT:
                     parsedArguments.add(parseAlphaDigit(rawArguments.get(i).trim()));
                     break;
+                case SCHEME:
+                    parsedArguments.add(parseScheme(rawArguments.get(i).trim()));
+                    break;
             }
         }
-        return new Pair<String, List<String>>(commandString, parsedArguments);
+        return new CommandParameter(commandString,parsedArguments);
     }
 
-    private String parseDigit(String rawField) throws Exception {
-        if (rawField == null || rawField.isEmpty()) throw new Exception("String cannot be empty or null");
+    private Integer parseDigit(String rawField) throws IllegalArgumentException,NullPointerException {
+        if (rawField == null || rawField.isEmpty()) throw new NullPointerException("String cannot be empty or null");
         if (!(rawField.matches("[0-9]+")))
-            throw new Exception("Неверный формат аргумента");
-        return rawField;
+            throw new IllegalArgumentException("Неверный формат аргумента");
+        return Integer.parseInt(rawField);
     }
 
-    private String parseAlpha(String rawField) throws Exception {
-        if (rawField == null || rawField.isEmpty()) throw new Exception("String cannot be empty or null");
+    private String parseAlpha(String rawField) throws IllegalArgumentException,NullPointerException {
+        if (rawField == null || rawField.isEmpty()) throw new NullPointerException("String cannot be empty or null");
         if (!(rawField.matches("[A-Za-zА-Яа-я]+")))
-            throw new Exception("Неверный формат аргумента");
+            throw new IllegalArgumentException("Неверный формат аргумента");
         return rawField;
     }
 
-    private String parseDateTime(String rawField) throws Exception {
-        if (rawField == null || rawField.isEmpty()) throw new Exception("String cannot be empty or null");
-        List<String> parts = new ArrayList<String>(Arrays.asList(rawField.split("-")));
-        if (parts.size() != 5) throw new Exception("Неверный формат аргумента");
-        for (String string : parts) {
-            if (string.isEmpty())
-                throw new Exception("Неверный формат аргумента");
-        }
-        if (parts.get(0).length() != 4)
-            throw new Exception("Неверный формат аргумента YYYY");
-        for (int i = 1; i < parts.size(); i++) {
-            if (parts.get(i).length() != 2)
-                throw new Exception("Неверный формат аргумента");
-        }
-        List<Integer> parsedInts = new ArrayList<>();
-        for (String string : parts)
-            parsedInts.add(Integer.parseInt(parseDigit(string)));
-        if (parsedInts.get(0) < 0) throw new Exception("Неверное значение аргумента YYYY");
-        if (parsedInts.get(1) < 1 || parsedInts.get(1) > 12) throw new Exception("Неверное значение аргумента MM");
-        if (parsedInts.get(2) < 1 || parsedInts.get(2) > 31) throw new Exception("Неверное значение аргумента DD");
-        if (parsedInts.get(3) < 0 || parsedInts.get(3) > 23) throw new Exception("Неверное значение аргумента HH");
-        if (parsedInts.get(4) < 0 || parsedInts.get(4) > 59) throw new Exception("Неверное значение аргумента MM");
-        return rawField;
+    private LocalDateTime parseDateTime(String rawField) throws NullPointerException{
+        if(rawField == null) throw new NullPointerException();
+        return  LocalDateTime.parse(rawField, DateTimeFormatter.ofPattern("dd-LL-yyyy HH-mm"));
     }
 
-    private String parseDate(String rawField) throws Exception {
-        if (rawField == null || rawField.isEmpty()) throw new Exception("String cannot be empty or null");
-        List<String> parts = new ArrayList<String>(Arrays.asList(rawField.split("-")));
-        if (parts.size() != 3) throw new Exception("Неверный формат аргумента");
-        for (String string : parts) {
-            if (string.isEmpty())
-                throw new Exception("Неверный формат аргумента");
-        }
-        if (parts.get(0).length() != 4)
-            throw new Exception("Неверный формат аргумента YYYY");
-        for (int i = 1; i < parts.size(); i++) {
-            if (parts.get(i).length() != 2)
-                throw new Exception("Неверный формат аргумента");
-        }
-        List<Integer> parsedInts = new ArrayList<>();
-        for (String string : parts)
-            parsedInts.add(Integer.parseInt(parseDigit(string)));
-        if (parsedInts.get(0) < 0) throw new Exception("Неверное значение аргумента YYYY");
-        if (parsedInts.get(1) < 1 || parsedInts.get(1) > 12) throw new Exception("Неверное значение аргумента MM");
-        if (parsedInts.get(2) < 1 || parsedInts.get(2) > 31) throw new Exception("Неверное значение аргумента DD");
-        return rawField;
+    private LocalDate parseDate(String rawField) throws NullPointerException {
+        if(rawField == null) throw new NullPointerException();
+        return  LocalDate.parse(rawField, DateTimeFormatter.ofPattern("dd-LL-yyyy"));
     }
-
-    private String parseAlphaDigit(String rawField) throws Exception
+    private String parseAlphaDigit(String rawField) throws NullPointerException,IllegalArgumentException
     {
-        if (rawField == null || rawField.isEmpty()) throw new Exception("String cannot be empty or null");
+        if (rawField == null || rawField.isEmpty()) throw new NullPointerException("String cannot be empty or null");
         if (!(rawField.matches("[A-Za-zА-Яа-я0-9 ]+")))
-            throw new Exception("Неверный формат аргумента");
+            throw new IllegalArgumentException("Неверный формат аргумента");
         return rawField;
-
+    }
+    private SchemeType parseScheme(String rawField){
+        if(rawField.equals("olympic")) return SchemeType.OLYMPIC;
+        if(rawField.equals("round")) return SchemeType.ROUND;
+        throw new IllegalArgumentException("scheme");
     }
 }
 

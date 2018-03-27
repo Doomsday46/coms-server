@@ -10,14 +10,14 @@ public class Score {
         this.pointsSecondSide = 0;
     }
 
-    public Score(int pointsFirstSide, int pointsSecondSide) throws Exception {
-        if(pointsFirstSide < 0 || pointsSecondSide < 0) throw new Exception("The number of points is indicated by a negative number");
+    public Score(int pointsFirstSide, int pointsSecondSide) throws IllegalArgumentException {
+        if(pointsFirstSide < 0 || pointsSecondSide < 0) throw new IllegalArgumentException();
         this.pointsFirstSide = pointsFirstSide;
         this.pointsSecondSide = pointsSecondSide;
     }
 
-    public void setPoints(int pointsFirstSide, int pointsSecondSide) throws Exception {
-        if(pointsFirstSide < 0 || pointsSecondSide < 0) throw new Exception("The number of points is indicated by a negative number");
+    public void setPoints(int pointsFirstSide, int pointsSecondSide) throws IllegalArgumentException {
+        if(pointsFirstSide < 0 || pointsSecondSide < 0) throw new IllegalArgumentException();
         this.pointsFirstSide = pointsFirstSide;
         this.pointsSecondSide = pointsSecondSide;
     }

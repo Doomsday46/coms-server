@@ -1,55 +1,34 @@
 package com.saviorru.comsserver.cli.command;
 
-import com.saviorru.comsserver.cli.RuntimeEnvironment;
+import com.saviorru.comsserver.cli.CommandParameter;
+import com.saviorru.comsserver.cli.TournamentBuilder;
 import com.saviorru.comsserver.domain.TimeSettings;
 import com.saviorru.comsserver.domain.schematictype.SchemeType;
 import com.saviorru.comsserver.domain.tournament.TournamentSettings;
 import com.saviorru.comsserver.domain.tournament.TournamentSettingsImpl;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.List;
 
 public class SetSettingTournamentCommand implements Command {
 
-    private TournamentSettings tournamentSettings;
-    private List<String> arguments;
-    private TimeSettings timeSettings;
-    private RuntimeEnvironment env;
+    private TournamentBuilder tournamentBuilder;
+    private CommandParameter commandParameter;
 
-    public SetSettingTournamentCommand(List<String> arguments, TimeSettings timeSettings, RuntimeEnvironment env) {
-        this.arguments = arguments;
-        this.timeSettings = timeSettings;
-        this.env = env;
-    }
-
-    @Override
-    public void backup() {
-
+    public SetSettingTournamentCommand(TournamentBuilder tournamentBuilder, CommandParameter commandParameter) {
+        this.tournamentBuilder = tournamentBuilder;
+        this.commandParameter = commandParameter;
     }
 
     @Override
     public Boolean execute() throws Exception {
         SchemeType schemeType = null;
-        if (arguments.get(1).toLowerCase().equals("olympic"))
-            schemeType = SchemeType.OLYMPIC;
-        if (arguments.get(1).toLowerCase().equals("round"))
-            schemeType = SchemeType.ROUND;
-        List<String> stringDate = Arrays.asList(arguments.get(2).split("-"));
-        LocalDateTime startDate = LocalDateTime.of(Integer.parseInt(stringDate.get(0)), Integer.parseInt(stringDate.get(1)),
-                Integer.parseInt( stringDate.get(2)), Integer.parseInt(stringDate.get(3)), Integer.parseInt(stringDate.get(4)));
-        tournamentSettings = new TournamentSettingsImpl(arguments.get(0), schemeType, startDate, timeSettings);
-        this.env.setTournamentSettings(tournamentSettings);
+        tournamentBuilder.setTimeSettings(new TimeSettings());
+        TournamentSettings tournamentSettings = new TournamentSettingsImpl((String) commandParameter.getParameter(0),
+                                                                            (SchemeType) commandParameter.getParameter(1),
+                                                                            (LocalDateTime) commandParameter.getParameter(2),
+                                                                            tournamentBuilder.getTimeSettings());
+        tournamentBuilder.setTournamentSettings(tournamentSettings);
         return true;
     }
 
-    @Override
-    public String nameCommand() {
-        return "set setting";
-    }
-
-    @Override
-    public String commandFormat() {
-        return "command: tournament name, type scheme (olympic/round ...), date start (yyyy-mm-dd-hh-minmin)";
-    }
 }

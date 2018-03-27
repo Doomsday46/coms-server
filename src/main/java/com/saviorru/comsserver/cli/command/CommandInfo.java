@@ -21,7 +21,6 @@ public class CommandInfo {
         this.help = help;
     }
 
-
     public String getCommand() {
         return command;
     }

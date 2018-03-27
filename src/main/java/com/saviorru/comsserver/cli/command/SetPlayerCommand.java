@@ -1,45 +1,31 @@
 package com.saviorru.comsserver.cli.command;
 
+import com.saviorru.comsserver.cli.CommandParameter;
+import com.saviorru.comsserver.cli.TournamentBuilder;
 import com.saviorru.comsserver.domain.model.Player;
 import com.saviorru.comsserver.domain.dispatcher.PlayerDispatcher;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
 public class SetPlayerCommand implements Command {
 
-    private PlayerDispatcher playerDispatcher;
-    private List<String> arguments;
+    private TournamentBuilder tournamentBuilder;
+    private CommandParameter commandParameter;
 
-    public SetPlayerCommand(PlayerDispatcher playerDispatcher, List<String> arguments) {
-        this.playerDispatcher = playerDispatcher;
-        this.arguments = arguments;
-    }
-
-    @Override
-    public void backup() {
-
+    public SetPlayerCommand(TournamentBuilder tournamentBuilder, CommandParameter commandParameter) {
+        this.tournamentBuilder = tournamentBuilder;
+        this.commandParameter = commandParameter;
     }
 
     @Override
     public Boolean execute() throws Exception {
-
-            LocalDate birthDate = null;
-            List<String> stringDate = Arrays.asList(arguments.get(2).split("-"));
-            birthDate = LocalDate.of(Integer.parseInt(stringDate.get(0)), Integer.parseInt(stringDate.get(1)),
-                    Integer.parseInt( stringDate.get(2)));
-            playerDispatcher.addPlayer(new Player(arguments.get(0), arguments.get(1), birthDate));
-            return true;
+        tournamentBuilder.getPlayerDispatcher().addPlayer(new Player((String) commandParameter.getParameter(0),
+                                                                     (String) commandParameter.getParameter(1),
+                                                                     (LocalDate) commandParameter.getParameter(2)));
+        return true;
     }
 
-    @Override
-    public String nameCommand() {
-        return "set player";
-    }
-
-    @Override
-    public String commandFormat() {
-        return "command: first name, second name, yyyy-mm-dd";
-    }
 }

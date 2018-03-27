@@ -1,34 +1,19 @@
 package com.saviorru.comsserver.cli.command;
 
-import com.saviorru.comsserver.domain.tournament.Tournament;
+import com.saviorru.comsserver.cli.TournamentBuilder;
 
 public class FinishTournamentCommand implements Command {
 
-    private Tournament tournament;
+    private TournamentBuilder TournamentBuilder;
 
-    public FinishTournamentCommand(Tournament tournament) {
-        if (tournament == null) throw new NullPointerException();
-        this.tournament = tournament;
-    }
-
-    @Override
-    public void backup() {
-
+    public FinishTournamentCommand(TournamentBuilder TournamentBuilder) {
+        if (TournamentBuilder == null) throw new NullPointerException();
+        this.TournamentBuilder = TournamentBuilder;
     }
 
     @Override
     public Boolean execute() throws Exception {
-        tournament.finish();
+        TournamentBuilder.getTournament().finish();
         return true;
-    }
-
-    @Override
-    public String nameCommand() {
-        return "finish";
-    }
-
-    @Override
-    public String commandFormat() {
-        return "command";
     }
 }

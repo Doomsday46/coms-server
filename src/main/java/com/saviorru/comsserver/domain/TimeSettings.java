@@ -6,6 +6,11 @@ public class TimeSettings {
     private Integer dateHourOffset;
 
 
+    public TimeSettings()  {
+        this.allowedHourStart = 10;
+        this.allowedHourEnd = 20;
+        this.dateHourOffset = 12;
+    }
     public TimeSettings(Integer allowedHourStart, Integer allowedHourEnd, Integer dateHourOffset) throws Exception {
         if (allowedHourStart == null || allowedHourEnd == null || dateHourOffset == null) throw new NullPointerException();
         if (dateHourOffset < 0) throw new Exception("Time offset cannot be below zero");

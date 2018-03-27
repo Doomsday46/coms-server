@@ -4,26 +4,23 @@ import org.junit.Test;
 
 public class ConsoleControllerTests {
 
-    private ConsoleController testSubject;
+    private Interpreter testSubject;
 
     @Before
     public void initTest() throws Exception
     {
-        testSubject = new ConsoleController();
+        testSubject = new Interpreter();
     }
 
     @Test()
-    public void ccHelpCmdTest()
-    {
-        System.out.print(testSubject.parseAndExecute("help"));
+    public void ccHelpCmdTest() throws Exception {
+        System.out.print(testSubject.parse("help"));
     }
 
     @Test()
-    public void ccBackupTest()
-    {
-        System.out.print(testSubject.parseAndExecute("help"));
-        System.out.print(testSubject.parseAndExecute("undo"));
-        System.out.print(testSubject.parseAndExecute("set player: Igor, Savochkin, 1969-10-11"));
+    public void ccBackupTest() throws Exception {
+        System.out.print(testSubject.parse("help"));
+        System.out.print(testSubject.parse("set player: Igor, Savochkin, 1969-10-11"));
         System.out.print('1');
     }
 }

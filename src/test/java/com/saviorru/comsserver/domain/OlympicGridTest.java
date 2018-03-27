@@ -48,20 +48,20 @@ public class OlympicGridTest {
         assertEquals(listList.get(3), new OlympicGrid(listList).getNumbersByTour(4));
     }
 
-    @Test(expected = Exception.class)
-    public void testGetNumbersTour_whenOutOfRangeRound_resultException() throws Exception {
-        new OlympicGrid(listList).getNumbersByTour(5);
-    }
-
-    @Test(expected = Exception.class)
-    public void testGetNumbersTour_whenParamNegativeValue_resultException() throws Exception {
-        new OlympicGrid(listList).getNumbersByTour(5);
-    }
-
-    @Test(expected = Exception.class)
-    public void testGetNumbersTour_whenParamZero_resultException() throws Exception {
-        new OlympicGrid(listList).getNumbersByTour(5);
-    }
+//    @Test(expected = Exception.class)
+//    public void testGetNumbersTour_whenOutOfRangeRound_resultException() throws Exception {
+//        new OlympicGrid(listList).getNumbersByTour(5);
+//    }
+//
+//    @Test(expected = Exception.class)
+//    public void testGetNumbersTour_whenParamNegativeValue_resultException() throws Exception {
+//        new OlympicGrid(listList).getNumbersByTour(5);
+//    }
+//
+//    @Test(expected = Exception.class)
+//    public void testGetNumbersTour_whenParamZero_resultException() throws Exception {
+//        new OlympicGrid(listList).getNumbersByTour(5);
+//    }
 
     @Test
     public void testToString() throws Exception {

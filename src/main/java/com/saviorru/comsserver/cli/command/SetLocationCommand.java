@@ -1,5 +1,7 @@
 package com.saviorru.comsserver.cli.command;
 
+import com.saviorru.comsserver.cli.CommandParameter;
+import com.saviorru.comsserver.cli.TournamentBuilder;
 import com.saviorru.comsserver.domain.dispatcher.LocationDispatcher;
 import com.saviorru.comsserver.domain.model.Location;
 
@@ -7,32 +9,18 @@ import java.util.List;
 
 public class SetLocationCommand implements Command {
 
-    private LocationDispatcher locationDispatcher;
-    private List<String> arguments;
+    private TournamentBuilder tournamentBuilder;
+    private CommandParameter commandParameter;
 
-    public SetLocationCommand(LocationDispatcher locationDispatcher, List<String> arguments) {
-        this.locationDispatcher = locationDispatcher;
-        this.arguments = arguments;
-    }
-
-    @Override
-    public void backup() {
-
+    public SetLocationCommand(TournamentBuilder tournamentBuilder, CommandParameter commandParameter) {
+        this.tournamentBuilder = tournamentBuilder;
+        this.commandParameter = commandParameter;
     }
 
     @Override
     public Boolean execute() throws Exception {
-        locationDispatcher.addLocation(new Location(arguments.get(0), arguments.get(1)));
+        tournamentBuilder.getLocationDispatcher().addLocation(new Location((String)commandParameter.getParameter(0),(String)commandParameter.getParameter(1)));
         return true;
     }
 
-    @Override
-    public String nameCommand() {
-        return "set location";
-    }
-
-    @Override
-    public String commandFormat() {
-        return "command: name location, description";
-    }
 }
