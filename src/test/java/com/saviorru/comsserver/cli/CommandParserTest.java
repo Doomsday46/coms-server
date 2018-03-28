@@ -17,10 +17,10 @@ public class CommandParserTest {
     @Before
     public void initTest() throws Exception
     {
-        testSubject = new CommandParser();
-        testSubject.addParsingRule("help", new ArrayList<ArgumentType>());
-        ArgumentType[] rule = {ArgumentType.ALPHA, ArgumentType.ALPHA, ArgumentType.DATE};
-        testSubject.addParsingRule("addplayer", Arrays.asList(rule));
+        //testSubject = new CommandParser();
+//        testSubject.addParsingRule("help", new ArrayList<ArgumentType>());
+//        ArgumentType[] rule = {ArgumentType.ALPHA, ArgumentType.ALPHA, ArgumentType.DATE};
+//        testSubject.addParsingRule("addplayer", Arrays.asList(rule));
     }
 
     @Test()

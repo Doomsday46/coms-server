@@ -17,6 +17,7 @@ public class Interpreter {
         initCommandsMap();
         tournamentBuilder = new TournamentBuilder();
         commandFactory = new CommandFactory(tournamentBuilder);
+        commandRules = new CommandRules();
         for (Map.Entry<String, CommandInfo> entry : this.commandsMap.entrySet()) {
             commandRules.addParsingRule(entry.getKey(), entry.getValue().getArgumentsList());
         }

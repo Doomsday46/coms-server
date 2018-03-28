@@ -21,8 +21,8 @@ public class Main {
                 System.out.print("\n");
                 System.out.print(output);
                 System.out.print("\n");
-            } catch(Exception e){
-               System.out.println(Arrays.toString(e.getStackTrace()));
+            } catch(IllegalArgumentException | NullPointerException e){
+               System.out.println(e.getMessage());
             }
             if(command.equals("exit")) break;
         }
