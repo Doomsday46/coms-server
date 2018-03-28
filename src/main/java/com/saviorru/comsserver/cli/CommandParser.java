@@ -9,26 +9,22 @@ import java.util.*;
 
 public class CommandParser {
     private CommandRules commandRules;
-
+    private List<String> rawArguments;
+    private String nameCommand;
     public CommandParser(CommandRules commandRules){
         this.commandRules = commandRules;
     }
 
-    public CommandParameter parse(String commandLine) throws Exception {
+    public CommandParameter parse(String commandLine){
         if (commandLine.isEmpty()) return null;
-        List<String> parts = new ArrayList<String>(Arrays.asList(commandLine.split(":")));
-        String commandString = parts.get(0);
-        commandString = commandString.toLowerCase();
-        commandString = commandString.trim();
-        List<String> rawArguments = new ArrayList<>();
-        if (parts.size() > 1)
-            rawArguments = new ArrayList<String>(Arrays.asList(parts.get(1).split(",")));
-        if (!(commandRules.containsRule(commandString)))
-            throw new Exception("Invalid command");
-        List<ArgumentType> argumentTypes = commandRules.getArgumentType(commandString);
-        List<Object> parsedArguments = new ArrayList<>();
+        List<ArgumentType> argumentTypes = parseString(commandLine);
         if (rawArguments.size() != argumentTypes.size())
-            throw new Exception("Invalid arguments count");
+            throw new IllegalArgumentException("Invalid arguments count");
+        return getCommandParameters(argumentTypes,commandLine);
+    }
+
+    private CommandParameter getCommandParameters(List<ArgumentType> argumentTypes,String commandLine){
+        List<Object> parsedArguments = new ArrayList<>();
         for (int i = 0; i < argumentTypes.size(); i++) {
             switch (argumentTypes.get(i)) {
                 case ALPHA:
@@ -51,17 +47,29 @@ public class CommandParser {
                     break;
             }
         }
-        return new CommandParameter(commandString,parsedArguments);
+        return new CommandParameter(nameCommand,parsedArguments);
     }
 
-    private Integer parseDigit(String rawField) throws IllegalArgumentException,NullPointerException {
+    private List<ArgumentType> parseString(String commandLine){
+        List<String> parts = new ArrayList<String>(Arrays.asList(commandLine.split(":")));
+        nameCommand = parts.get(0);
+        nameCommand = nameCommand.toLowerCase();
+        nameCommand = nameCommand.trim();
+        if (parts.size() > 1)
+            rawArguments = new ArrayList<String>(Arrays.asList(parts.get(1).split(",")));
+        if (!(commandRules.containsRule(nameCommand)))
+            throw new IllegalArgumentException("Invalid command");
+        return commandRules.getArgumentType(nameCommand);
+    }
+
+    private Integer parseDigit(String rawField){
         if (rawField == null || rawField.isEmpty()) throw new NullPointerException("String cannot be empty or null");
         if (!(rawField.matches("[0-9]+")))
             throw new IllegalArgumentException("Неверный формат аргумента");
         return Integer.parseInt(rawField);
     }
 
-    private String parseAlpha(String rawField) throws IllegalArgumentException,NullPointerException {
+    private String parseAlpha(String rawField){
         if (rawField == null || rawField.isEmpty()) throw new NullPointerException("String cannot be empty or null");
         if (!(rawField.matches("[A-Za-zА-Яа-я]+")))
             throw new IllegalArgumentException("Неверный формат аргумента");
@@ -77,7 +85,7 @@ public class CommandParser {
         if(rawField == null) throw new NullPointerException();
         return  LocalDate.parse(rawField, DateTimeFormatter.ofPattern("dd-LL-yyyy"));
     }
-    private String parseAlphaDigit(String rawField) throws NullPointerException,IllegalArgumentException
+    private String parseAlphaDigit(String rawField)
     {
         if (rawField == null || rawField.isEmpty()) throw new NullPointerException("String cannot be empty or null");
         if (!(rawField.matches("[A-Za-zА-Яа-я0-9 ]+")))
