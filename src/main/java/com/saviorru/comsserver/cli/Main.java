@@ -3,6 +3,7 @@ package com.saviorru.comsserver.cli;
 
 import com.saviorru.comsserver.cli.*;
 
+import java.time.format.DateTimeParseException;
 import java.util.*;
 
 
@@ -18,11 +19,11 @@ public class Main {
 
             try {
                 String output = controller.parse(command);
-                System.out.print("\n");
-                System.out.print(output);
-                System.out.print("\n");
+                System.out.println(output);
             } catch(IllegalArgumentException | NullPointerException e){
                System.out.println(e.getMessage());
+            }catch (DateTimeParseException e){
+                System.out.println("Invalid format date and time");
             }
             if(command.equals("exit")) break;
         }

@@ -5,6 +5,7 @@ import com.saviorru.comsserver.domain.schematictype.SchemeType;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.*;
 
 public class CommandParser {
@@ -65,20 +66,20 @@ public class CommandParser {
     private Integer parseDigit(String rawField){
         if (rawField == null || rawField.isEmpty()) throw new NullPointerException("String cannot be empty or null");
         if (!(rawField.matches("[0-9]+")))
-            throw new IllegalArgumentException("Неверный формат аргумента");
+            throw new IllegalArgumentException("Invalid format, expected number");
         return Integer.parseInt(rawField);
     }
 
     private String parseAlpha(String rawField){
         if (rawField == null || rawField.isEmpty()) throw new NullPointerException("String cannot be empty or null");
         if (!(rawField.matches("[A-Za-zА-Яа-я]+")))
-            throw new IllegalArgumentException("Неверный формат аргумента");
+            throw new IllegalArgumentException("Invalid format, expected string");
         return rawField;
     }
 
     private LocalDateTime parseDateTime(String rawField) throws NullPointerException{
         if(rawField == null) throw new NullPointerException();
-        return  LocalDateTime.parse(rawField, DateTimeFormatter.ofPattern("dd-LL-yyyy HH-mm"));
+        return LocalDateTime.parse(rawField, DateTimeFormatter.ofPattern("dd-LL-yyyy HH-mm"));
     }
 
     private LocalDate parseDate(String rawField) throws NullPointerException {
@@ -89,13 +90,14 @@ public class CommandParser {
     {
         if (rawField == null || rawField.isEmpty()) throw new NullPointerException("String cannot be empty or null");
         if (!(rawField.matches("[A-Za-zА-Яа-я0-9 ]+")))
-            throw new IllegalArgumentException("Неверный формат аргумента");
+            throw new IllegalArgumentException("Invalid format, expected string or number");
         return rawField;
     }
+
     private SchemeType parseScheme(String rawField){
         if(rawField.equals("olympic")) return SchemeType.OLYMPIC;
         if(rawField.equals("round")) return SchemeType.ROUND;
-        throw new IllegalArgumentException("scheme");
+        throw new IllegalArgumentException("expected type scheme");
     }
 }
 

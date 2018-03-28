@@ -4,6 +4,7 @@ import com.saviorru.comsserver.domain.model.Location;
 import com.saviorru.comsserver.exceptions.FoundObjectException;
 
 import java.util.ArrayList;
+import java.util.DuplicateFormatFlagsException;
 import java.util.List;
 
 public class LocationDispatcher {
@@ -21,7 +22,7 @@ public class LocationDispatcher {
     public void addLocation(Location newLocation) {
         if (newLocation == null) throw new NullPointerException("Null argument");
         if (this.locationsList.contains(newLocation)) {
-            throw new FoundObjectException("Duplicate locations is not allowed");
+            throw new DuplicateFormatFlagsException("Duplicate locations is not allowed");
         } else {
             this.locationsList.add(newLocation);
         }
@@ -30,7 +31,7 @@ public class LocationDispatcher {
     public void addAllLocation(List<Location> Locations) {
         if (Locations == null) throw new NullPointerException("Null argument");
         if (this.locationsList.containsAll(Locations)) {
-            throw new FoundObjectException("Duplicate locations is not allowed");
+            throw new DuplicateFormatFlagsException("Duplicate locations is not allowed");
         } else {
             this.locationsList.addAll(Locations);
         }
@@ -41,7 +42,7 @@ public class LocationDispatcher {
         if (this.locationsList.contains(existingLocation)) {
             this.locationsList.remove(existingLocation);
         } else {
-            throw new FoundObjectException("Location doesn't exist in dispather");
+            throw new DuplicateFormatFlagsException("Location doesn't exist in dispather");
         }
     }
 
@@ -53,7 +54,7 @@ public class LocationDispatcher {
                 return;
             }
         }
-        throw new FoundObjectException("Location with specified place doesn't exist in dispather");
+        throw new DuplicateFormatFlagsException("Location with specified place doesn't exist in dispather");
     }
 
     public Location getFreeLocation() {

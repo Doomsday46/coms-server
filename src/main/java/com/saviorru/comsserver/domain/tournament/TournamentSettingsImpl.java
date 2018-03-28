@@ -24,6 +24,7 @@ public class TournamentSettingsImpl implements TournamentSettings {
     {
         if (schemeType == null || startDate == null || timeSettings == null) throw new NullPointerException();
         if (tournamentName.isEmpty()) throw new EmptyParameter("Empty tournament name");
+        if (startDate.isBefore(LocalDateTime.now())) throw new IllegalArgumentException("Can't set the past date and time");
         this.schemeType = schemeType;
         this.startDate = startDate;
         this.timeSettings = timeSettings;
