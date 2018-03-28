@@ -21,7 +21,7 @@ public class TournamentSettingsImpl implements TournamentSettings {
     private Integer prizePlacesCount;
 
     public TournamentSettingsImpl(String tournamentName, SchemeType schemeType, LocalDateTime startDate, TimeSettings timeSettings)
-    throws EmptyParameter {
+    {
         if (schemeType == null || startDate == null || timeSettings == null) throw new NullPointerException();
         if (tournamentName.isEmpty()) throw new EmptyParameter("Empty tournament name");
         this.schemeType = schemeType;
@@ -43,7 +43,7 @@ public class TournamentSettingsImpl implements TournamentSettings {
     }
 
     @Override
-    public Scheme getScheme(Integer playersCount) throws Exception {
+    public Scheme getScheme(Integer playersCount){
 
         if (schemeType == SchemeType.ROUND) {
             return new RoundScheme(playersCount);

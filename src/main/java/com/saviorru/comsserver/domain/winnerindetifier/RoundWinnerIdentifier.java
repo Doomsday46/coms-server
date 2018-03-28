@@ -13,9 +13,9 @@ public class RoundWinnerIdentifier implements WinnerIdentifier {
     }
 
     @Override
-    public List<Player> identifyWinners(List<Match> finishedMatches) throws Exception {
+    public List<Player> identifyWinners(List<Match> finishedMatches) {
         if (finishedMatches == null) throw new NullPointerException();
-        if (finishedMatches.isEmpty()) throw new Exception("Matches list is empty");
+        if (finishedMatches.isEmpty()) throw new IllegalArgumentException("Matches list is empty");
 
         Map<Player, Integer> playerScores = new HashMap<>();
         for (Match match : finishedMatches)
@@ -44,7 +44,7 @@ public class RoundWinnerIdentifier implements WinnerIdentifier {
         return result;
     }
 
-    private Map<Player, Integer> calcBerger(List<Match> matchesList, Map<Player, Integer> playerScores) throws Exception {
+    private Map<Player, Integer> calcBerger(List<Match> matchesList, Map<Player, Integer> playerScores){
         Map<Player, Integer> bergerMap = new HashMap<>();
         for (Player player : playerScores.keySet()) {
             Integer bergerCoeff = 0;

@@ -13,9 +13,9 @@ import java.util.Set;
 
 public interface Schedule {
     public List<Match> getAllMatches();
-    public void addMatch(Match match) throws Exception;
-    public void addMatches(List<Match> matches) throws Exception;
-    public List<Match> getMatchesByState(MatchState state) throws Exception;
+    public void addMatch(Match match);
+    public void addMatches(List<Match> matches);
+    public List<Match> getMatchesByState(MatchState state);
     public List<Match> getMatchesByPlayer(Player player);
     public List<Match> getMatchesByDate(LocalDateTime date);
     public List<Match> getMatchesByLocation(Location location);

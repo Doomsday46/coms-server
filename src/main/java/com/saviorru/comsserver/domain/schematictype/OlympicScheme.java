@@ -250,9 +250,9 @@ public class OlympicScheme implements Scheme {
     }
 
     @Override
-    public void updateScheme(List<Integer> winnersList) throws EmptyParameter {
+    public void updateScheme(List<Integer> winnersList){
         if (winnersList == null) throw new NullPointerException();
-        if (winnersList.isEmpty()) throw new EmptyParameter("Empty list winner");
+        if (winnersList.isEmpty()) throw new IllegalArgumentException("Empty list winner");
         createSchedule(winnersList, this.children);
     }
 

@@ -10,8 +10,8 @@ import java.time.LocalDateTime;
 
 public interface TournamentSettings {
 
-    public DateDispatcher getDateDispatcher() throws Exception;
-    public Scheme getScheme(Integer playersCount) throws Exception;
+    public DateDispatcher getDateDispatcher();
+    public Scheme getScheme(Integer playersCount);
     public WinnerIdentifier getWinnerIdentifier();
     public SchemeType getSchemeType();
     public LocalDateTime getStartDate();

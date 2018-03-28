@@ -7,14 +7,14 @@ public class Location {
 
     private Boolean isBusy;
 
-    public Location(String place, String description) throws Exception {
+    public Location(String place, String description){
         if ((place == null) || (place.isEmpty()))
         {
-            throw new Exception("Place string cannot be empty or null");
+            throw new IllegalArgumentException("Place string cannot be empty or null");
         }
         if (description == null)
         {
-            throw  new Exception("Description string cannot be null");
+            throw  new IllegalArgumentException("Description string cannot be null");
         }
         this.place = place;
         this.description = description;
@@ -43,9 +43,9 @@ public class Location {
         return getPlace().equals(location.getPlace());
     }
 
-    public void setBusy(Boolean busy) throws Exception {
+    public void setBusy(Boolean busy){
         if (busy == null)
-            throw new Exception("Method's argument cannot be null");
+            throw new IllegalArgumentException("Method's argument cannot be null");
         isBusy = busy;
     }
 }

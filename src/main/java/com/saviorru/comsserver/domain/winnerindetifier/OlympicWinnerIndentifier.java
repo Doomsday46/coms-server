@@ -14,9 +14,9 @@ public class OlympicWinnerIndentifier implements WinnerIdentifier {
     }
 
     @Override
-    public List<Player> identifyWinners(List<Match> finishedMatches) throws Exception {
+    public List<Player> identifyWinners(List<Match> finishedMatches){
         if (finishedMatches == null) throw new NullPointerException();
-        if(finishedMatches.isEmpty()) throw new Exception("List winners is empty!");
+        if(finishedMatches.isEmpty()) throw new IllegalArgumentException("List winners is empty!");
         Match match = finishedMatches.get(0);
         for (int i = 1; i < finishedMatches.size(); i++) {
             if (finishedMatches.get(i).getDate().isAfter(match.getDate())) {

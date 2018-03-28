@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface PlayerGrid {
 
-    List<Integer> getNumbersByTour(Integer tour) throws Exception;
+    List<Integer> getNumbersByTour(Integer tour);
     Integer getTourCount();
 }

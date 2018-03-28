@@ -1,5 +1,6 @@
 package com.saviorru.comsserver.domain.schematictype;
 
+import com.saviorru.comsserver.exceptions.FoundObjectException;
 import javafx.util.Pair;
 
 import java.util.*;
@@ -10,14 +11,14 @@ public class RoundScheme implements Scheme
     private List<List<Meet>> toursList;
     private Integer playersCount;
 
-    public RoundScheme(Integer playersCount) throws Exception
+    public RoundScheme(Integer playersCount)
     {
         if (playersCount == null) throw new NullPointerException();
         this.toursList = this.buildScheme(playersCount);
         this.playersCount = playersCount;
     }
 
-    private void assignMeet(Integer firstNumber, Integer secondNumber) throws Exception {
+    private void assignMeet(Integer firstNumber, Integer secondNumber){
         for (List<Meet> tour: this.toursList)
         {
             for (Meet meet: tour) {
@@ -34,7 +35,7 @@ public class RoundScheme implements Scheme
             }
 
         }
-        throw new Exception("Cant find specified pair");
+        throw new FoundObjectException("Cant find specified pair");
 
     }
     private List<List<Meet>> buildScheme(Integer playersCount)
@@ -108,7 +109,7 @@ public class RoundScheme implements Scheme
     }
 
     @Override
-    public PlayerGrid getPlayerGrid() throws Exception {
+    public PlayerGrid getPlayerGrid(){
         List<List<Integer>> matrix = new ArrayList<>();
         matrix.add(collectNumbers());
         matrix.get(0).add(0, -1);
@@ -148,7 +149,7 @@ public class RoundScheme implements Scheme
         return result;
     }
 
-    private Boolean checkMeet(Integer firstNumber, Integer secondNumber) throws Exception
+    private Boolean checkMeet(Integer firstNumber, Integer secondNumber)
     {
         Meet compareMeet = new Meet(firstNumber, secondNumber);
         for (List<Meet> tour: toursList)

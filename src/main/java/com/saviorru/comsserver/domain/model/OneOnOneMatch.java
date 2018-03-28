@@ -1,6 +1,7 @@
 package com.saviorru.comsserver.domain.model;
 
 import com.saviorru.comsserver.domain.MatchState;
+import com.saviorru.comsserver.exceptions.PlayMatchException;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -15,7 +16,7 @@ public class OneOnOneMatch implements Match {
 
     public OneOnOneMatch(Player firstSide, Player secondSide, Location location, LocalDateTime date){
         if (firstSide == null || secondSide == null || location == null || date == null)
-            throw new NullPointerException();
+            throw new NullPointerException("Missing parameter");
         if(firstSide.equals(secondSide)) throw new IllegalArgumentException("Player can't be for 2 sides simultaneously");
         this.firstSide = firstSide;
         this.secondSide = secondSide;
@@ -30,8 +31,8 @@ public class OneOnOneMatch implements Match {
     }
 
     @Override
-    public Player getWinner() throws Exception {
-        if (!isPlayed()) throw new Exception("Match didn't played");
+    public Player getWinner(){
+        if (!isPlayed()) throw new PlayMatchException("Match didn't played");
         return (this.score.getPointsFirstSide() > this.score.getPointsSecondSide()) ? this.firstSide : this.secondSide;
     }
 
@@ -66,9 +67,9 @@ public class OneOnOneMatch implements Match {
     }
 
     @Override
-    public void setPoints(int pointsFirstSide, int pointsSecondSide) throws Exception {
+    public void setPoints(int pointsFirstSide, int pointsSecondSide){
             if (!isPlayed()) this.score.setPoints(pointsFirstSide, pointsSecondSide);
-            else throw new Exception("Match is already played");
+            else throw new PlayMatchException("Match is already played");
     }
 
     @Override

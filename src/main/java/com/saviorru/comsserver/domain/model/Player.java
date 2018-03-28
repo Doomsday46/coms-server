@@ -12,17 +12,17 @@ public class Player {
 
     private LocalDate birthDate;
 
-    public Player(String firstName, String lastName, LocalDate birthDate) throws Exception {
+    public Player(String firstName, String lastName, LocalDate birthDate){
         if (firstName == null || lastName == null || birthDate == null) throw new NullPointerException();
-        if (firstName.isEmpty() || lastName.isEmpty()) throw new Exception("Name of surname can't be empty");
+        if (firstName.isEmpty() || lastName.isEmpty()) throw new IllegalArgumentException("Name of surname can't be empty");
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthDate = birthDate;
     }
 
-    public Player(String firstName, String lastName, String patronymicName, LocalDate birthDate) throws Exception {
+    public Player(String firstName, String lastName, String patronymicName, LocalDate birthDate){
         if (firstName == null || lastName == null || birthDate == null) throw new NullPointerException();
-        if (firstName.isEmpty() || lastName.isEmpty()) throw new Exception("Name of surname can't be empty");
+        if (firstName.isEmpty() || lastName.isEmpty()) throw new IllegalArgumentException("Name of surname can't be empty");
         this.firstName = firstName;
         this.lastName = lastName;
         this.patronymicName = patronymicName;

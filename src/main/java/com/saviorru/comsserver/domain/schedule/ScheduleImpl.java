@@ -6,21 +6,18 @@ import com.saviorru.comsserver.domain.model.Match;
 import com.saviorru.comsserver.domain.model.Player;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class ScheduleImpl implements Schedule {
     private List<Match> matchesList;
 
-    public ScheduleImpl(List<Match> matchesList) throws Exception
+    public ScheduleImpl(List<Match> matchesList)
     {
         if (matchesList == null) throw new NullPointerException();
         Set<Match> checkSet = new HashSet<Match>(matchesList);
 
         if(checkSet.size() < matchesList.size()){
-            throw new Exception("Matches list contains unallowed duplicates");
+            throw new DuplicateFormatFlagsException("Matches list contains unallowed duplicates");
         }
         for (Match match: matchesList)
         {
@@ -40,23 +37,23 @@ public class ScheduleImpl implements Schedule {
     }
 
     @Override
-    public void addMatch(Match match) throws Exception {
+    public void addMatch(Match match) {
         if (match == null) throw new NullPointerException();
-        if (this.matchesList.contains(match)) throw new Exception("Duplicate matches is not allowed");
+        if (this.matchesList.contains(match)) throw new DuplicateFormatFlagsException("Duplicate matches is not allowed");
         this.matchesList.add(match);
 
     }
 
     @Override
-    public void addMatches(List<Match> matches) throws Exception {
+    public void addMatches(List<Match> matches) {
         if(matches == null) throw new NullPointerException();
-        if(matches.isEmpty()) throw new Exception("List is empty");
-        if (this.matchesList.containsAll(matches)) throw new Exception("Duplicate matches is not allowed");
+        if(matches.isEmpty()) throw new IllegalArgumentException("List is empty");
+        if (this.matchesList.containsAll(matches)) throw new DuplicateFormatFlagsException("Duplicate matches is not allowed");
         matchesList.addAll(matches);
     }
 
     @Override
-    public List<Match> getMatchesByState(MatchState state) throws Exception {
+    public List<Match> getMatchesByState(MatchState state){
         if (state == null) throw new NullPointerException();
         List<Match> returnList = new ArrayList<Match>();
         for (Match match: matchesList)

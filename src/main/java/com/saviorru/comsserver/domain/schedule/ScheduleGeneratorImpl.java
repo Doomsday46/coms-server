@@ -20,8 +20,7 @@ public class ScheduleGeneratorImpl implements ScheduleGenerator {
     private Scheme tournamentScheme;
 
 
-    public ScheduleGeneratorImpl(PlayerDispatcher playerDispatcher, LocationDispatcher locationDispatcher, DateDispatcher dateDispatcher, Scheme scheme)
-    throws Exception {
+    public ScheduleGeneratorImpl(PlayerDispatcher playerDispatcher, LocationDispatcher locationDispatcher, DateDispatcher dateDispatcher, Scheme scheme) {
         if (playerDispatcher == null || dateDispatcher == null || locationDispatcher == null || scheme == null)
             throw new NullPointerException();
         this.playerDispatcher = playerDispatcher;
@@ -32,14 +31,14 @@ public class ScheduleGeneratorImpl implements ScheduleGenerator {
     }
 
     @Override
-    public Schedule generateSchedule() throws Exception {
+    public Schedule generateSchedule(){
         Schedule newSchedule = new ScheduleImpl();
         newSchedule.addMatches(this.createMatches());
         return newSchedule;
     }
 
     @Override
-    public Schedule updateSchedule(List<Match> matchesList, Schedule existingSchedule) throws Exception {
+    public Schedule updateSchedule(List<Match> matchesList, Schedule existingSchedule){
         if (matchesList == null || existingSchedule == null) throw new NullPointerException();
         for (Match match: matchesList)
         {
@@ -57,7 +56,7 @@ public class ScheduleGeneratorImpl implements ScheduleGenerator {
         return existingSchedule;
     }
     @Override
-    public Schedule updateSchedule(Match match, Schedule existingSchedule) throws Exception{
+    public Schedule updateSchedule(Match match, Schedule existingSchedule){
         if (match== null || existingSchedule == null) throw new NullPointerException();
         List<Integer> winnersList = new ArrayList<>();
         winnersList.add(playerDispatcher.getPlayerNumber(match.getWinner()));
@@ -68,7 +67,7 @@ public class ScheduleGeneratorImpl implements ScheduleGenerator {
         return existingSchedule;
     }
     
-    private List<Match> createMatches() throws Exception
+    private List<Match> createMatches()
     {
         List<Match> matchesList = new ArrayList<>();
         List<Location> freeLocations = this.locationDispatcher.getAllFreeLocations();

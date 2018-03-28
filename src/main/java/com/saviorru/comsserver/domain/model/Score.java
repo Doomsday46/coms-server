@@ -10,13 +10,13 @@ public class Score {
         this.pointsSecondSide = 0;
     }
 
-    public Score(int pointsFirstSide, int pointsSecondSide) throws IllegalArgumentException {
+    public Score(int pointsFirstSide, int pointsSecondSide){
         if(pointsFirstSide < 0 || pointsSecondSide < 0) throw new IllegalArgumentException();
         this.pointsFirstSide = pointsFirstSide;
         this.pointsSecondSide = pointsSecondSide;
     }
 
-    public void setPoints(int pointsFirstSide, int pointsSecondSide) throws IllegalArgumentException {
+    public void setPoints(int pointsFirstSide, int pointsSecondSide){
         if(pointsFirstSide < 0 || pointsSecondSide < 0) throw new IllegalArgumentException();
         this.pointsFirstSide = pointsFirstSide;
         this.pointsSecondSide = pointsSecondSide;
