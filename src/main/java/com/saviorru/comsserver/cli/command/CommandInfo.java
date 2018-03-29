@@ -12,9 +12,8 @@ public class CommandInfo {
 
 
     public CommandInfo(String command, List<ArgumentType> argumentsList, String help)
-            throws Exception
     {
-        if (command.isEmpty()) throw new Exception("Empty command string");
+        if (command.isEmpty()) throw new IllegalArgumentException("Empty command string");
         if (argumentsList == null) throw  new NullPointerException();
         this.command = command;
         this.argumentsList = argumentsList;

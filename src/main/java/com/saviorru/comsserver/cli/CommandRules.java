@@ -12,11 +12,11 @@ public class  CommandRules {
         this.parsingRules = new HashMap<>();
     }
 
-    public void addParsingRule(String commandName, List<ArgumentType> fieldsType) throws Exception {
-        if (commandName.isEmpty()) throw new Exception("Empty command name");
+    public void addParsingRule(String commandName, List<ArgumentType> fieldsType) {
+        if (commandName.isEmpty()) throw new IllegalArgumentException("Empty command name");
         if (fieldsType == null) throw new NullPointerException("Null argument types list");
         if (this.parsingRules.containsKey(commandName))
-            throw new Exception("Parsing rule for this command already exists");
+            throw new IllegalArgumentException("Parsing rule for this command already exists");
         this.parsingRules.put(commandName, fieldsType);
     }
 

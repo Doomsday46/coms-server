@@ -11,7 +11,7 @@ public class Interpreter {
     private CommandRules commandRules;
 
 
-    public Interpreter() throws Exception {
+    public Interpreter(){
         initCommandsMap();
         commandRules = new CommandRules();
         for (Map.Entry<String, CommandInfo> entry : this.commandsMap.entrySet()) {
@@ -25,7 +25,7 @@ public class Interpreter {
         return parser.parse(rawString);
     }
 
-    private void initCommandsMap() throws Exception {
+    private void initCommandsMap() {
         commandsMap = new HashMap<>();
         commandsMap.put("undo", new CommandInfo("undo", new ArrayList<>(), "command"));
         commandsMap.put("start", new CommandInfo("start", new ArrayList<>(), "command"));

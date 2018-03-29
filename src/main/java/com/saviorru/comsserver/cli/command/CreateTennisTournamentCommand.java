@@ -16,7 +16,7 @@ public class CreateTennisTournamentCommand implements Command {
     @Override
     public Boolean execute(){
         tournamentManager.addTournament(tournamentBuilder.build());
-        tournamentBuilder =null;
+        this.tournamentBuilder = this.tournamentBuilder.clearBuilder();
         return true;
     }
 

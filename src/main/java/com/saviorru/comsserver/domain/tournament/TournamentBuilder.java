@@ -71,12 +71,10 @@ public class TournamentBuilder {
     }
 
     public Tournament build(){
-        try {
-            this.tournament =  new TennisTournament(playerDispatcher,locationDispatcher,tournamentSettings,schedule);
-            return this.tournament;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
+        return new TennisTournament(playerDispatcher,locationDispatcher,tournamentSettings,schedule);
+    }
+
+    public TournamentBuilder clearBuilder(){
+        return new TournamentBuilder();
     }
 }

@@ -15,8 +15,7 @@ public class ChooseTournamentCommand implements Command {
 
     @Override
     public Boolean execute(){
-        if(commandParameter.getParameter(0) instanceof Integer) tournamentManager.setActiveTournament((Integer)commandParameter.getParameter(0));
-        else tournamentManager.setActiveTournament((String)commandParameter.getParameter(0));
+        tournamentManager.setActiveTournament(Integer.parseInt(commandParameter.getParameter(0).toString()));
         return true;
     }
 }

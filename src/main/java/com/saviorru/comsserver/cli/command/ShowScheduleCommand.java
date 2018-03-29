@@ -17,11 +17,12 @@ public class ShowScheduleCommand implements Command {
 
     @Override
     public Boolean execute(){
+        showSchedule();
         return true;
     }
 
-    private void showSchedule() throws Exception {
-
+    private void showSchedule(){
+        if(tournament == null) throw new NullPointerException("Tournament not found");
         List<Match> matches = new ArrayList<>(tournament.getSchedule().getAllMatches());
         matches.sort(new Comparator<Match>() {
             public int compare(Match o1, Match o2) {
@@ -31,7 +32,7 @@ public class ShowScheduleCommand implements Command {
         printSchedule(matches);
     }
 
-    private void printSchedule(List<Match> matches) throws Exception {
+    private void printSchedule(List<Match> matches){
         int count = 0;
         for (Match match : matches) {
             String isPlayedMatch = (match.isPlayed()) ? " сыгран" : " не сыгран";

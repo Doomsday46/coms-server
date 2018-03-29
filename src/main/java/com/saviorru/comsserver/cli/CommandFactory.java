@@ -39,6 +39,6 @@ public class CommandFactory {
             case "choose tournament":
                 return new ChooseTournamentCommand(tournamentManager, commandParameter);
         }
-        return null;
+        throw new NullPointerException("Command not found");
     }
 }

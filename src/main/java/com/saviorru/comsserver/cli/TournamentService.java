@@ -6,6 +6,8 @@ import com.saviorru.comsserver.domain.tournament.TournamentManager;
 public class TournamentService {
 
     private TournamentBuilder tournamentBuilder;
+
+
     private TournamentManager tournamentManager;
     private CommandFactory commandFactory;
 
@@ -16,7 +18,16 @@ public class TournamentService {
     }
 
     public boolean executeCommand(CommandParameter commandParameter){
-        commandFactory.getCommand(tournamentManager,tournamentBuilder,commandParameter);
+        commandFactory.getCommand(tournamentManager,tournamentBuilder,commandParameter).execute();
+        if(tournamentManager.isAddTournament()) tournamentBuilder = new TournamentBuilder();
         return true;
+    }
+
+    public TournamentManager getTournamentManager() {
+        return tournamentManager;
+    }
+
+    public TournamentBuilder getTournamentBuilder() {
+        return tournamentBuilder;
     }
 }
