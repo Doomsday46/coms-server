@@ -8,15 +8,11 @@ import java.util.*;
 public class Interpreter {
     private CommandParser parser;
     private Map<String, CommandInfo> commandsMap;
-    private CommandFactory commandFactory;
-    private TournamentBuilder tournamentBuilder;
     private CommandRules commandRules;
 
 
     public Interpreter() throws Exception {
         initCommandsMap();
-        tournamentBuilder = new TournamentBuilder();
-        commandFactory = new CommandFactory(tournamentBuilder);
         commandRules = new CommandRules();
         for (Map.Entry<String, CommandInfo> entry : this.commandsMap.entrySet()) {
             commandRules.addParsingRule(entry.getKey(), entry.getValue().getArgumentsList());
@@ -25,9 +21,8 @@ public class Interpreter {
     }
 
 
-    public String parse(String rawString) throws Exception {
-            commandFactory.getCommand(parser.parse(rawString)).execute();
-            return "Opa a ti kto";
+    public CommandParameter parse(String rawString){
+        return parser.parse(rawString);
     }
 
     private void initCommandsMap() throws Exception {
@@ -46,6 +41,7 @@ public class Interpreter {
         commandsMap.put("create tournament", new CommandInfo("create tournament",new ArrayList<>(),"command"));
         commandsMap.put("help", new CommandInfo("help",new ArrayList<>(),"command"));
         commandsMap.put("report", new CommandInfo("report",new ArrayList<>(),"command"));
+        commandsMap.put("choose tournament", new CommandInfo("choose tournament",Arrays.asList(ArgumentType.ALPHA_DIGIT),"command"));
     }
 
 }

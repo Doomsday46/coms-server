@@ -1,11 +1,8 @@
 package com.saviorru.comsserver.cli.command;
 
 import com.saviorru.comsserver.cli.CommandParameter;
-import com.saviorru.comsserver.cli.TournamentBuilder;
-import com.saviorru.comsserver.domain.dispatcher.LocationDispatcher;
+import com.saviorru.comsserver.domain.tournament.TournamentBuilder;
 import com.saviorru.comsserver.domain.model.Location;
-
-import java.util.List;
 
 public class SetLocationCommand implements Command {
 
@@ -18,7 +15,7 @@ public class SetLocationCommand implements Command {
     }
 
     @Override
-    public Boolean execute() throws Exception {
+    public Boolean execute(){
         tournamentBuilder.getLocationDispatcher().addLocation(new Location((String)commandParameter.getParameter(0),(String)commandParameter.getParameter(1)));
         return true;
     }

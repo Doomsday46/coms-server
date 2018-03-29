@@ -1,21 +1,18 @@
 package com.saviorru.comsserver.cli.command;
 
-import com.saviorru.comsserver.cli.TournamentBuilder;
 import com.saviorru.comsserver.domain.tournament.Tournament;
-
-import java.util.Scanner;
 
 public class StartTournamentCommand implements Command {
 
-    private TournamentBuilder tournamentBuilder;
+    private Tournament tournament;
 
-    public StartTournamentCommand(TournamentBuilder tournamentBuilder) {
-        this.tournamentBuilder = tournamentBuilder;
+    public StartTournamentCommand(Tournament tournament) {
+        this.tournament = tournament;
     }
 
     @Override
-    public Boolean execute() throws Exception {
-        tournamentBuilder.getTournament().start();
+    public Boolean execute(){
+        tournament.start();
         return true;
     }
 

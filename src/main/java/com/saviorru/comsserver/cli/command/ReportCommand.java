@@ -1,19 +1,18 @@
 package com.saviorru.comsserver.cli.command;
 
-import com.saviorru.comsserver.cli.TournamentBuilder;
 import com.saviorru.comsserver.domain.tournament.Tournament;
 import com.saviorru.comsserver.domain.tournament.TournamentReport;
 
 public class ReportCommand implements Command {
-    private TournamentBuilder tournamentBuilder;
+    private Tournament tournament;
 
-    public ReportCommand(TournamentBuilder tournamentBuilder) {
-        this.tournamentBuilder = tournamentBuilder;
+    public ReportCommand(Tournament tournament) {
+        this.tournament = tournament;
     }
 
     @Override
-    public Boolean execute() throws Exception {
-        TournamentReport report = new TournamentReport(tournamentBuilder.getTournament());
+    public Boolean execute(){
+        TournamentReport report = new TournamentReport(tournament);
         System.out.print(report);
         return true;
     }

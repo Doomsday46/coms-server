@@ -18,6 +18,7 @@ public class CommandParser {
 
     public CommandParameter parse(String commandLine){
         if (commandLine.isEmpty()) return null;
+        rawArguments = new ArrayList<>();
         List<ArgumentType> argumentTypes = parseString(commandLine);
         if (rawArguments.size() != argumentTypes.size())
             throw new IllegalArgumentException("Invalid arguments count");

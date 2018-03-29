@@ -1,13 +1,10 @@
-package com.saviorru.comsserver.cli;
+package com.saviorru.comsserver.domain.tournament;
 
 import com.saviorru.comsserver.domain.TimeSettings;
 import com.saviorru.comsserver.domain.dispatcher.LocationDispatcher;
 import com.saviorru.comsserver.domain.dispatcher.PlayerDispatcher;
 import com.saviorru.comsserver.domain.schedule.Schedule;
 import com.saviorru.comsserver.domain.schedule.ScheduleImpl;
-import com.saviorru.comsserver.domain.tournament.TennisTournament;
-import com.saviorru.comsserver.domain.tournament.Tournament;
-import com.saviorru.comsserver.domain.tournament.TournamentSettings;
 
 public class TournamentBuilder {
 

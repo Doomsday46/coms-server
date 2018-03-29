@@ -1,7 +1,7 @@
 package com.saviorru.comsserver.cli.command;
 
 import com.saviorru.comsserver.cli.CommandParameter;
-import com.saviorru.comsserver.cli.TournamentBuilder;
+import com.saviorru.comsserver.domain.tournament.TournamentBuilder;
 import com.saviorru.comsserver.domain.TimeSettings;
 import com.saviorru.comsserver.domain.schematictype.SchemeType;
 import com.saviorru.comsserver.domain.tournament.TournamentSettings;
@@ -20,7 +20,7 @@ public class SetSettingTournamentCommand implements Command {
     }
 
     @Override
-    public Boolean execute() throws Exception {
+    public Boolean execute(){
         SchemeType schemeType = null;
         tournamentBuilder.setTimeSettings(new TimeSettings());
         TournamentSettings tournamentSettings = new TournamentSettingsImpl((String) commandParameter.getParameter(0),

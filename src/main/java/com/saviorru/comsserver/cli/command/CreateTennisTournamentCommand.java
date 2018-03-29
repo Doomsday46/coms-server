@@ -1,18 +1,22 @@
 package com.saviorru.comsserver.cli.command;
 
-import com.saviorru.comsserver.cli.TournamentBuilder;
+import com.saviorru.comsserver.domain.tournament.TournamentBuilder;
+import com.saviorru.comsserver.domain.tournament.TournamentManager;
 
 public class CreateTennisTournamentCommand implements Command {
 
     private TournamentBuilder tournamentBuilder;
+    private TournamentManager tournamentManager;
 
-    public CreateTennisTournamentCommand(TournamentBuilder tournamentBuilder) {
+    public CreateTennisTournamentCommand(TournamentManager tournamentManager, TournamentBuilder tournamentBuilder) {
         this.tournamentBuilder = tournamentBuilder;
+        this.tournamentManager = tournamentManager;
     }
 
     @Override
-    public Boolean execute() throws Exception {
-        tournamentBuilder.build();
+    public Boolean execute(){
+        tournamentManager.addTournament(tournamentBuilder.build());
+        tournamentBuilder =null;
         return true;
     }
 

@@ -1,19 +1,18 @@
 package com.saviorru.comsserver.cli.command;
 
-import com.saviorru.comsserver.cli.TournamentBuilder;
 import com.saviorru.comsserver.domain.tournament.Tournament;
 
 public class ShowGridCommand implements Command {
 
-    private TournamentBuilder tournamentBuilder;
+    private Tournament tournament;
 
-    public ShowGridCommand(TournamentBuilder tournamentBuilder) {
-        this.tournamentBuilder = tournamentBuilder;
+    public ShowGridCommand(Tournament tournament) {
+        this.tournament = tournament;
     }
 
     @Override
-    public Boolean execute() throws Exception {
-        System.out.print(tournamentBuilder.getTournament().getPlayerGrid().toString());
+    public Boolean execute(){
+        System.out.print(tournament.getPlayerGrid().toString());
         return true;
     }
 }

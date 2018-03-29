@@ -2,15 +2,18 @@ package com.saviorru.comsserver.cli;
 
 
 import com.saviorru.comsserver.cli.*;
+import com.saviorru.comsserver.domain.tournament.TournamentBuilder;
+import com.saviorru.comsserver.domain.tournament.TournamentManager;
 
 import java.time.format.DateTimeParseException;
 import java.util.*;
 
 
-public class Main {
+public class Application {
     public static void main(String[] args) throws Exception {
         Scanner scanner = new Scanner(System.in);
         String command = "";
+        TournamentService tournamentService = new TournamentService(new TournamentBuilder(),new TournamentManager(),new CommandFactory());
         Interpreter controller = new Interpreter();
         while(true){
 
@@ -18,8 +21,7 @@ public class Main {
             command = scanner.nextLine();
 
             try {
-                String output = controller.parse(command);
-                System.out.println(output);
+                if(tournamentService.executeCommand(controller.parse(command))) System.out.println("Done");
             } catch(IllegalArgumentException | NullPointerException e){
                System.out.println(e.getMessage());
             }catch (DateTimeParseException e){

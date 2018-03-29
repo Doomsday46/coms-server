@@ -1,6 +1,5 @@
 package com.saviorru.comsserver.cli.command;
 
-import com.saviorru.comsserver.cli.TournamentBuilder;
 import com.saviorru.comsserver.domain.model.Match;
 import com.saviorru.comsserver.domain.tournament.Tournament;
 
@@ -10,21 +9,20 @@ import java.util.List;
 
 public class ShowScheduleCommand implements Command {
 
-    private TournamentBuilder tournamentBuilder;
+    private Tournament tournament;
 
-    public ShowScheduleCommand(TournamentBuilder tournamentBuilder) {
-        this.tournamentBuilder = tournamentBuilder;
+    public ShowScheduleCommand(Tournament tournament) {
+        this.tournament = tournament;
     }
 
     @Override
-    public Boolean execute() throws Exception {
-        showSchedule();
+    public Boolean execute(){
         return true;
     }
 
     private void showSchedule() throws Exception {
 
-        List<Match> matches = new ArrayList<>(tournamentBuilder.getTournament().getSchedule().getAllMatches());
+        List<Match> matches = new ArrayList<>(tournament.getSchedule().getAllMatches());
         matches.sort(new Comparator<Match>() {
             public int compare(Match o1, Match o2) {
                 return (o1.getDate().isAfter(o2.getDate())) ? 1 : (o1.getDate().equals(o2.getDate())) ? 0 : -1;
