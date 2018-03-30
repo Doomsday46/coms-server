@@ -9,6 +9,7 @@ public class ShowPlayersCommand implements Command {
     private Tournament tournament;
 
     public ShowPlayersCommand(Tournament tournament){
+        if (tournament == null) throw new NullPointerException("Tournament not created");
         this.tournament = tournament;
     }
 

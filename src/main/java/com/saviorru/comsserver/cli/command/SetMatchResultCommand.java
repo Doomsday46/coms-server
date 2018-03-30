@@ -12,7 +12,8 @@ public class SetMatchResultCommand implements Command {
     private Integer matchNumber;
 
     public SetMatchResultCommand(Tournament tournament, CommandParameter commandParameter) throws NullPointerException,IllegalArgumentException {
-        if ((Integer)commandParameter.getParameter(1) < 0 || (Integer)commandParameter.getParameter(2) < 0 || tournament == null) throw new NullPointerException();
+        if ((Integer)commandParameter.getParameter(1) < 0 || (Integer)commandParameter.getParameter(2) < 0) throw new IllegalArgumentException("Score less than zero");
+        if (tournament == null) throw new NullPointerException("Tournament not created");
         this.tournament = tournament;
         this.score = new Score((Integer)commandParameter.getParameter(1), (Integer)commandParameter.getParameter(2));
         this.matchNumber = (Integer)commandParameter.getParameter(0);

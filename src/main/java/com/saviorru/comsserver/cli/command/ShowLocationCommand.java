@@ -9,6 +9,7 @@ public class ShowLocationCommand implements Command {
     private Tournament tournament;
 
     public ShowLocationCommand(Tournament tournament){
+        if (tournament == null) throw new NullPointerException("Tournament not created");
         this.tournament = tournament;
     }
 

@@ -7,7 +7,7 @@ public class FinishTournamentCommand implements Command {
     private Tournament tournament;
 
     public FinishTournamentCommand(Tournament tournament) {
-        if (tournament == null) throw new NullPointerException();
+        if (tournament == null) throw new NullPointerException("Tournament not created");
         this.tournament = tournament;
     }
 

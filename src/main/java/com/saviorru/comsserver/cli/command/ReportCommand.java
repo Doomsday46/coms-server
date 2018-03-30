@@ -7,6 +7,7 @@ public class ReportCommand implements Command {
     private Tournament tournament;
 
     public ReportCommand(Tournament tournament) {
+        if (tournament == null) throw new NullPointerException("Tournament not created");
         this.tournament = tournament;
     }
 

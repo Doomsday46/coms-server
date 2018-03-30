@@ -24,7 +24,7 @@ public class ShowScheduleCommand implements Command {
     }
 
     private void showSchedule(){
-        if(tournament == null) throw new NullPointerException("Tournament not found");
+        if (tournament == null) throw new NullPointerException("Tournament not created");
         List<Match> matches = new ArrayList<>(tournament.getSchedule().getAllMatches());
         matches.sort(new Comparator<Match>() {
             public int compare(Match o1, Match o2) {

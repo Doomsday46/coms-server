@@ -14,8 +14,9 @@ public class CommandFactory {
                 break;
             case "set player":
                 return new SetPlayerCommand(tournamentBuilder, commandParameter);
-            case "show schedule":
+            case "show schedule": {
                 return new ShowScheduleCommand(tournament);
+            }
             case "show players":
                 return new ShowPlayersCommand(tournament);
             case "show locations":
