@@ -1,6 +1,6 @@
 package com.saviorru.comsserver.domain.model;
 
-import com.saviorru.comsserver.cli.TextProgram;
+import com.saviorru.comsserver.localization.TextProgram;
 import com.saviorru.comsserver.domain.MatchState;
 import com.saviorru.comsserver.exceptions.PlayMatchException;
 

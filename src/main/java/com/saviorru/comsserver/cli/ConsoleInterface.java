@@ -2,9 +2,9 @@ package com.saviorru.comsserver.cli;
 
 import com.saviorru.comsserver.domain.tournament.TournamentBuilder;
 import com.saviorru.comsserver.domain.tournament.TournamentManager;
+import com.saviorru.comsserver.localization.TextProgram;
 
 import java.time.format.DateTimeParseException;
-import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 

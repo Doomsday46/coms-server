@@ -1,6 +1,6 @@
 package com.saviorru.comsserver.cli.command;
 
-import com.saviorru.comsserver.cli.TextProgram;
+import com.saviorru.comsserver.localization.TextProgram;
 import com.saviorru.comsserver.domain.model.Location;
 import com.saviorru.comsserver.domain.tournament.Tournament;
 

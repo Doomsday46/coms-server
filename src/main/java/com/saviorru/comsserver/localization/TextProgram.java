@@ -1,4 +1,4 @@
-package com.saviorru.comsserver.cli;
+package com.saviorru.comsserver.localization;
 
 import java.util.Locale;
 import java.util.ResourceBundle;

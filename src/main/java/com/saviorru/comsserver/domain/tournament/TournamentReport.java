@@ -1,6 +1,6 @@
 package com.saviorru.comsserver.domain.tournament;
 
-import com.saviorru.comsserver.cli.TextProgram;
+import com.saviorru.comsserver.localization.TextProgram;
 import com.saviorru.comsserver.domain.model.Match;
 import com.saviorru.comsserver.domain.model.Player;
 import com.saviorru.comsserver.domain.schematictype.SchemeType;
