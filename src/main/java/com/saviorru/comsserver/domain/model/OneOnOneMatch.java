@@ -1,9 +1,11 @@
 package com.saviorru.comsserver.domain.model;
 
+import com.saviorru.comsserver.cli.TextProgram;
 import com.saviorru.comsserver.domain.MatchState;
 import com.saviorru.comsserver.exceptions.PlayMatchException;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 public class OneOnOneMatch implements Match {
@@ -92,13 +94,13 @@ public class OneOnOneMatch implements Match {
     public String toString() {
 
         String result = "";
-        result += "Дата проведения: " + getDate().toString() + "\n";
-        result += "Место проведения: " + getLocation().getPlace() + "\n";
-        result += "Состояние матча: ";
+        result += TextProgram.getResourceBundle().getString("dateMatch") + ": " + getDate().format(DateTimeFormatter.ofPattern("dd.LL.yyyy HH:mm")) + "\n";
+        result += TextProgram.getResourceBundle().getString("match.location") + ": " + getLocation().getPlace() + "\n";
+        result += TextProgram.getResourceBundle().getString("statusMatch") + ": ";
         if (isPlayed())
-            result += "сыгран" + "\n";
+            result += TextProgram.getResourceBundle().getString("text.played") + "\n";
         else
-            result += "не сыгран" + "\n";
+            result += TextProgram.getResourceBundle().getString("text.notPlayed") + "\n";
         result += getFirstSide().toString() + "  :  " + getPointsFirstSide() + "\n";
         result += getSecondSide().toString() + "  :  " + getPointsSecondSide() + "\n";
         return result;

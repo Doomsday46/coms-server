@@ -4,6 +4,7 @@ import com.saviorru.comsserver.domain.tournament.TournamentBuilder;
 import com.saviorru.comsserver.domain.tournament.TournamentManager;
 
 import java.time.format.DateTimeParseException;
+import java.util.ResourceBundle;
 import java.util.Scanner;
 
 public class InteractiveMenu {
@@ -14,16 +15,18 @@ public class InteractiveMenu {
     private int countElement;
     private int step;
     private int countTournament;
+    private ResourceBundle resourceBundle;
 
-    public InteractiveMenu() {
+    public InteractiveMenu(ResourceBundle resourceBundle) {
         scanner = new Scanner(System.in);
         commandLine = "";
         tournamentService = new TournamentService(new TournamentBuilder(), new TournamentManager(), new CommandFactory());
         controller = new Interpreter();
+        this.resourceBundle = resourceBundle;
     }
 
     public void run() {
-        System.out.println("Добро пожаловать, приготовтесь сейчас будем создавать турнир");
+        System.out.println(resourceBundle.getObject("training.greeting"));
         step = 1;
         countElement = 0;
         countTournament = tournamentService.getTournamentManager().getTournaments().size();
@@ -45,15 +48,16 @@ public class InteractiveMenu {
                 closeTrainig();
             }
             if (step == 0) {
-                System.out.print("Введите команду: ");
+                System.out.print(resourceBundle.getObject("enterCommand"));
                 commandLine = scanner.nextLine();
 
                 try {
-                    if (tournamentService.executeCommand(controller.parse(commandLine))) System.out.println("Done");
+                    if (tournamentService.executeCommand(controller.parse(commandLine)))
+                        System.out.println(resourceBundle.getObject("done"));
                 } catch (IllegalArgumentException | NullPointerException e) {
                     System.out.println(e.getMessage());
                 } catch (DateTimeParseException e) {
-                    System.out.println("Invalid format date and time");
+                    System.out.println(resourceBundle.getObject("invalidFormat"));
                 }
                 if (commandLine.equals("exit")) break;
             }
@@ -63,20 +67,9 @@ public class InteractiveMenu {
     }
 
     private void closeTrainig() {
-        System.out.println("Теперь вы можете начать турнир командой start");
-        System.out.println("Посмотреть игроков: show players");
-        System.out.println("Посмотреть места проведения матчей: show location");
-        System.out.println("Посмотреть расписание: show schedule");
-        System.out.println("Посмотреть сетку игроков: show grid");
-        System.out.println("Установить результат матча : set result match");
-        System.out.println("Формат  set result match: number match, score first players, score second players");
-        System.out.println("Пример  set result match: 1, 10, 11");
-        System.out.println("Закончить турнир finish");
-        System.out.println("Важно, нельзя закончить турнир, если не сыграны все матчи, это не спортивно!");
-        System.out.println("Если хотите создать еще турнир введите new tournament");
-        System.out.println("Иначе введите current tournament и можете вводить все выше перечисленные команды");
+        System.out.println(resourceBundle.getObject("training.step5"));
         while (true) {
-            System.out.print("Введите команду: ");
+            System.out.print(resourceBundle.getObject("enterCommand"));
             commandLine = scanner.nextLine();
             executeCommand(commandLine);
             if (commandLine.equals("new tournament")) {
@@ -92,48 +85,39 @@ public class InteractiveMenu {
     }
 
     private void fourthStepMenu() {
-        System.out.println("Теперь вы можете создать турнир командой create tournament");
-        System.out.println("Формат  команда");
-        System.out.println("Пример  create tournament");
+        System.out.println(resourceBundle.getObject("training.step4"));
         while (true) {
-            System.out.print("Введите команду: ");
+            System.out.print(resourceBundle.getObject("enterCommand"));
             commandLine = scanner.nextLine();
             executeCommand(commandLine);
             if (countElement == 1) {
-                System.out.println("Турнир создан!");
+                System.out.println(resourceBundle.getObject("tournamentC"));
                 step++;
                 countElement = 0;
                 break;
-            } else System.out.println("Вы не создали турнир!");
+            } else System.out.println(resourceBundle.getObject("tournamentNC"));
         }
 
     }
 
     private void thirdStepMenu() {
-        System.out.println("Установите настройки турнира set setting");
-        System.out.println("Формат  set setting: name tournament, type scheme, date and time(dd-mm-yyyy HH-MM)");
-        System.out.println("Пример   set setting: testTournament, olympic, 10-05-2018 10-00");
-        System.out.println("Важно: нельзя устанавливать прошедшую дату");
-        System.out.println("Для выхода введите enough");
+        System.out.println(resourceBundle.getObject("training.step3"));
         while (true) {
-            System.out.print("Введите команду: ");
+            System.out.print(resourceBundle.getObject("enterCommand"));
             commandLine = scanner.nextLine();
             executeCommand(commandLine);
             if (countElement == 1) {
                 step++;
                 countElement = 0;
                 break;
-            } else System.out.println("Вы не установили настройки!");
+            } else System.out.println(resourceBundle.getObject("notSetSetting"));
         }
     }
 
     private void secondStepMenu() {
-        System.out.println("Введите данные о месте проведение матчей с помощью команды set location");
-        System.out.println("Формат  set location: name place, description");
-        System.out.println("Пример  set location: Marta, table");
-        System.out.println("Для выхода введите enough");
+        System.out.println(resourceBundle.getObject("training.step2"));
         while (true) {
-            System.out.print("Введите команду: ");
+            System.out.print(resourceBundle.getObject("enterCommand"));
             commandLine = scanner.nextLine();
             executeCommand(commandLine);
             if (commandLine.equals("enough")) {
@@ -141,19 +125,15 @@ public class InteractiveMenu {
                     step++;
                     countElement = 0;
                     break;
-                } else System.out.println("Не достаточно мест для игр, необходимо хотя бы одно!");
+                } else System.out.println(resourceBundle.getObject("notEnoughLocations"));
             }
         }
     }
 
     private void fisrtStepMenu() {
-        System.out.println("Введите данные игрока с помощью команды set player");
-        System.out.println("Формат  set player: first name,second name, year birth (dd-mm-yyyy)");
-        System.out.println("Пример  set player: Artem, Neobakov, 10-05-1995");
-        System.out.println("Важно: возраст игрока должен быть не моложе 7 лет");
-        System.out.println("Для выхода введите enough");
+        System.out.println(resourceBundle.getObject("training.step1"));
         while (true) {
-            System.out.print("Введите команду: ");
+            System.out.print(resourceBundle.getObject("enterCommand"));
             commandLine = scanner.nextLine();
             executeCommand(commandLine);
             if (commandLine.equals("enough")) {
@@ -161,19 +141,22 @@ public class InteractiveMenu {
                     step++;
                     countElement = 0;
                     break;
-                } else System.out.println("Не достаточно игроков, нужно на " + (2 - countElement) + "больше");
+                } else {
+                    System.out.print(resourceBundle.getObject("notEnoughPlayers"));
+                    System.out.println(" " + (2 - countElement));
+                }
             }
         }
     }
 
     private void executeCommand(String string) {
         try {
-            if (tournamentService.executeCommand(controller.parse(string))) System.out.println("Done");
+            if (tournamentService.executeCommand(controller.parse(string)))  System.out.println(resourceBundle.getObject("done"));;
             countElement++;
         } catch (IllegalArgumentException | NullPointerException e) {
             System.out.println(e.getMessage());
         } catch (DateTimeParseException e) {
-            System.out.println("Invalid format date and time");
+            System.out.println(resourceBundle.getObject("invalidFormat"));
         }
     }
 

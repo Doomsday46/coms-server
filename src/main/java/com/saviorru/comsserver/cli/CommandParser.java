@@ -5,8 +5,9 @@ import com.saviorru.comsserver.domain.schematictype.SchemeType;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class CommandParser {
     private CommandRules commandRules;
@@ -53,7 +54,7 @@ public class CommandParser {
     }
 
     private List<ArgumentType> parseString(String commandLine){
-        List<String> parts = new ArrayList<String>(Arrays.asList(commandLine.split(":")));
+        List<String> parts = new ArrayList<String>(Arrays.asList(commandLine.split(":",2)));
         nameCommand = parts.get(0);
         nameCommand = nameCommand.toLowerCase();
         nameCommand = nameCommand.trim();
@@ -80,12 +81,12 @@ public class CommandParser {
 
     private LocalDateTime parseDateTime(String rawField) throws NullPointerException{
         if(rawField == null) throw new NullPointerException();
-        return LocalDateTime.parse(rawField, DateTimeFormatter.ofPattern("dd-LL-yyyy HH-mm"));
+        return LocalDateTime.parse(rawField, DateTimeFormatter.ofPattern("dd.LL.yyyy HH:mm"));
     }
 
     private LocalDate parseDate(String rawField) throws NullPointerException {
         if(rawField == null) throw new NullPointerException();
-        return  LocalDate.parse(rawField, DateTimeFormatter.ofPattern("dd-LL-yyyy"));
+        return  LocalDate.parse(rawField, DateTimeFormatter.ofPattern("dd.LL.yyyy"));
     }
     private String parseAlphaDigit(String rawField)
     {

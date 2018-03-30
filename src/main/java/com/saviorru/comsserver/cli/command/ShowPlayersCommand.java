@@ -1,5 +1,6 @@
 package com.saviorru.comsserver.cli.command;
 
+import com.saviorru.comsserver.cli.TextProgram;
 import com.saviorru.comsserver.domain.model.Player;
 import com.saviorru.comsserver.domain.tournament.Tournament;
 
@@ -16,8 +17,8 @@ public class ShowPlayersCommand implements Command {
         int number = 0;
         for(Player player: tournament.getPlayers()){
             number++;
-            System.out.println("Игрок " + number + " : " + player.getFirstName()  + " , "
-                            + player.getLastName() + " , " +  " age: " + player.getAge());
+            System.out.println(TextProgram.getResourceBundle().getString("text.player") + number + " : " + player.getFirstName() + " , "
+                    + player.getLastName() + " , " + TextProgram.getResourceBundle().getString("age") + ": " + player.getAge());
 
         }
         return number > 0;

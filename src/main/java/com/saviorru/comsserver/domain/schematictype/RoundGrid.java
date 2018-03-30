@@ -1,7 +1,5 @@
 package com.saviorru.comsserver.domain.schematictype;
 
-import com.saviorru.comsserver.domain.schematictype.PlayerGrid;
-
 import java.util.List;
 
 public class RoundGrid implements PlayerGrid {
@@ -39,7 +37,7 @@ public class RoundGrid implements PlayerGrid {
         result.append(" \n");
         for (int i =1; i<matrix.size(); i++)
         {
-            for (int k =0; k< result.toString().split("\n")[0].length(); k++)
+            for (int k = 0; k < result.toString().split("\n")[0].length(); k++)
                 result.append('-');
             result.append('\n');
             Integer digit = matrix.get(0).get(i);
