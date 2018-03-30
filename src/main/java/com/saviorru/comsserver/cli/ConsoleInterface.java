@@ -15,7 +15,7 @@ public class ConsoleInterface {
         String command = "";
         TournamentService tournamentService = new TournamentService(new TournamentBuilder(),new TournamentManager(),new CommandFactory());
         Interpreter controller = new Interpreter();
-        new TextProgram("programText",new Locale("en","UK"));
+        new TextProgram("programText");
         ResourceBundle resourceBundle = TextProgram.getResourceBundle();
         System.out.println(resourceBundle.getObject("startApp"));
         while(true) {

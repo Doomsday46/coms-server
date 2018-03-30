@@ -18,5 +18,6 @@ public interface TournamentSettings {
     public TimeSettings getTimeSettings();
     public String getTournamentName();
     public Integer getPrizePlacesCount();
+    public void setPrizePlacesCount(Integer prizePlacesCount);
 
 }

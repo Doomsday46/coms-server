@@ -44,6 +44,7 @@ public class TennisTournament implements Tournament {
         this.locationDispatcher = locationDispatcher;
         this.isStart = false;
         this.tournamentSettings = tournamentSettings;
+        if(tournamentSettings.getPrizePlacesCount() > playerDispatcher.getAllPlayers().size()) tournamentSettings.setPrizePlacesCount(playerDispatcher.getAllPlayers().size());
         this.prizePlaces = new ArrayList<>();
         generationSchedule();
     }

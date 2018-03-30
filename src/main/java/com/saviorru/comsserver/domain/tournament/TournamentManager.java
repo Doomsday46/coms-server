@@ -20,7 +20,7 @@ public class TournamentManager {
     }
 
     public boolean addTournament(Tournament tournament) {
-        if(tournament == null) throw new NullPointerException("При добавлении отсутствовал турнир");
+        if(tournament == null) throw new NullPointerException("Problem add tournament, tournament exist");
         tournaments.add(tournament);
         activeTournament = tournaments.get(tournaments.size()-1);
         sizeTournaments = tournaments.size();
@@ -28,18 +28,18 @@ public class TournamentManager {
     }
 
     public Tournament getTournament(int index) {
-        if (index < 0 || index > tournaments.size()) throw new IllegalArgumentException("Такого турнира не существует");
+        if (index < 0 || index > tournaments.size()) throw new IllegalArgumentException("Tournament exist");
         return tournaments.get(index);
     }
 
     public boolean setActiveTournament(int index) {
-        if (index < 0 || index > tournaments.size()) throw new IllegalArgumentException("Такого турнира не существует");
+        if (index < 0 || index > tournaments.size()) throw new IllegalArgumentException("Tournament exist");
         activeTournament = tournaments.get(index);
         return true;
     }
     public boolean setActiveTournament(String nameTournament) {
-        if (nameTournament == null) throw new NullPointerException("Требуется указать имя турнира");
-        if (nameTournament.isEmpty()) throw new IllegalArgumentException("Имя должно содеражть хотя бы 1 символ");
+        if (nameTournament == null) throw new NullPointerException("Exist name tournament");
+        if (nameTournament.isEmpty()) throw new IllegalArgumentException("In the name at least 1 character");
         for (Tournament tournament : tournaments) {
             if (nameTournament.equals(tournament.getName())) activeTournament = tournament;
         }

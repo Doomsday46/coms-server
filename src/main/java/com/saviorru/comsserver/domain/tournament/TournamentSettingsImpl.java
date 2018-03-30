@@ -18,6 +18,8 @@ public class TournamentSettingsImpl implements TournamentSettings {
     private LocalDateTime startDate;
     private TimeSettings timeSettings;
     private String tournamentName;
+
+
     private Integer prizePlacesCount;
 
     public TournamentSettingsImpl(String tournamentName, SchemeType schemeType, LocalDateTime startDate, TimeSettings timeSettings)
@@ -37,7 +39,9 @@ public class TournamentSettingsImpl implements TournamentSettings {
         }
     }
 
-
+    public void setPrizePlacesCount(Integer prizePlacesCount) {
+        this.prizePlacesCount = prizePlacesCount;
+    }
     @Override
     public DateDispatcher getDateDispatcher()  {
         return new DateDispatcher(startDate, timeSettings);
