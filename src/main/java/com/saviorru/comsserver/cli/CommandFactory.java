@@ -10,8 +10,6 @@ public class CommandFactory {
     public Command getCommand(TournamentManager tournamentManager, TournamentBuilder tournamentBuilder, CommandParameter commandParameter) {
         Tournament tournament = tournamentManager.getActiveTournament();
         switch (commandParameter.getNameCommand()) {
-            case "help":/* return new HelpCommand(commandsMap);*/
-                break;
             case "set player":
                 return new SetPlayerCommand(tournamentBuilder, commandParameter);
             case "show schedule": {
