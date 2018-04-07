@@ -15,18 +15,18 @@ import static junit.framework.TestCase.*;
 
 public class PlayerTest {
 
-    @Test(expected = Exception.class)
-    public void testInitializingClassField()throws Exception {
+    @Test(expected = NullPointerException.class)
+    public void testInitializingClassField(){
            Player player = new Player(null, null, null);
     }
 
     @Test
-    public void tesGetPatronymicNameResultEmptyString() throws Exception{
+    public void tesGetPatronymicNameResultEmptyString(){
             Player player = new Player("a","b",null, LocalDate.of(1972,2,1));
             assertEquals("",player.getPatronymicName());
     }
     @Test
-    public void testGetPatronymicNameResultNoEmptyString() throws Exception{
+    public void testGetPatronymicNameResultNoEmptyString() {
             Player player = new Player("a","b", "c", LocalDate.of(1972,2,1));
             assertEquals("c",player.getPatronymicName());
     }
