@@ -8,8 +8,8 @@ public class ChooseTournamentCommand implements Command {
     private TournamentManager tournamentManager;
     private CommandParameter commandParameter;
 
-    public ChooseTournamentCommand(TournamentManager tournamentManager,CommandParameter commandParameter) {
-        this.tournamentManager = tournamentManager;
+    public ChooseTournamentCommand(CommandParameter commandParameter) {
+        this.tournamentManager = new TournamentManager();
         this.commandParameter = commandParameter;
     }
 

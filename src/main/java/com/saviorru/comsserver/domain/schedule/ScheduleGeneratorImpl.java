@@ -1,8 +1,8 @@
 package com.saviorru.comsserver.domain.schedule;
 
-import com.saviorru.comsserver.domain.dispatcher.DateDispatcher;
-import com.saviorru.comsserver.domain.dispatcher.LocationDispatcher;
-import com.saviorru.comsserver.domain.dispatcher.PlayerDispatcher;
+import com.saviorru.comsserver.domain.dispatcher.DateService;
+import com.saviorru.comsserver.domain.dispatcher.LocationService;
+import com.saviorru.comsserver.domain.dispatcher.PlayerService;
 import com.saviorru.comsserver.domain.model.Location;
 import com.saviorru.comsserver.domain.model.Match;
 import com.saviorru.comsserver.domain.model.OneOnOneMatch;
@@ -14,18 +14,18 @@ import java.util.List;
 
 public class ScheduleGeneratorImpl implements ScheduleGenerator {
 
-    private PlayerDispatcher playerDispatcher;
-    private LocationDispatcher locationDispatcher;
-    private DateDispatcher dateDispatcher;
+    private PlayerService playerService;
+    private LocationService locationService;
+    private DateService dateService;
     private Scheme tournamentScheme;
 
 
-    public ScheduleGeneratorImpl(PlayerDispatcher playerDispatcher, LocationDispatcher locationDispatcher, DateDispatcher dateDispatcher, Scheme scheme) {
-        if (playerDispatcher == null || dateDispatcher == null || locationDispatcher == null || scheme == null)
+    public ScheduleGeneratorImpl(PlayerService playerService, LocationService locationService, DateService dateService, Scheme scheme) {
+        if (playerService == null || dateService == null || locationService == null || scheme == null)
             throw new NullPointerException();
-        this.playerDispatcher = playerDispatcher;
-        this.locationDispatcher = locationDispatcher;
-        this.dateDispatcher = dateDispatcher;
+        this.playerService = playerService;
+        this.locationService = locationService;
+        this.dateService = dateService;
         this.tournamentScheme = scheme;
 
     }
@@ -47,7 +47,7 @@ public class ScheduleGeneratorImpl implements ScheduleGenerator {
         List<Integer> winnersList = new ArrayList<>();
         for (Match match: matchesList)
         {
-            winnersList.add(playerDispatcher.getPlayerNumber(match.getWinner()));
+            winnersList.add(playerService.getPlayerNumber(match.getWinner()));
         }
         this.tournamentScheme.updateScheme(winnersList);
         List<Match> newMatches = this.createMatches();
@@ -59,7 +59,7 @@ public class ScheduleGeneratorImpl implements ScheduleGenerator {
     public Schedule updateSchedule(Match match, Schedule existingSchedule){
         if (match== null || existingSchedule == null) throw new NullPointerException();
         List<Integer> winnersList = new ArrayList<>();
-        winnersList.add(playerDispatcher.getPlayerNumber(match.getWinner()));
+        winnersList.add(playerService.getPlayerNumber(match.getWinner()));
         this.tournamentScheme.updateScheme(winnersList);
         List<Match> newMatches = this.createMatches();
         if (newMatches.size() == 0) return existingSchedule;
@@ -70,16 +70,16 @@ public class ScheduleGeneratorImpl implements ScheduleGenerator {
     private List<Match> createMatches()
     {
         List<Match> matchesList = new ArrayList<>();
-        List<Location> freeLocations = this.locationDispatcher.getAllFreeLocations();
+        List<Location> freeLocations = this.locationService.getAllFreeLocations();
         if (freeLocations.size() == 0)
             return matchesList;
         for (Location location: freeLocations)
         {
             Pair<Integer,Integer> playerPair = tournamentScheme.getNextNotPlayedPair();
             if (playerPair == null) break;
-            locationDispatcher.reserveLocation(location);
-            Match newMatch = new OneOnOneMatch(playerDispatcher.getPlayerByNumber(playerPair.getKey()),
-                    playerDispatcher.getPlayerByNumber(playerPair.getValue()), location, dateDispatcher.getNextDate());
+            locationService.reserveLocation(location);
+            Match newMatch = new OneOnOneMatch(playerService.getPlayerByNumber(playerPair.getKey()),
+                    playerService.getPlayerByNumber(playerPair.getValue()), location, dateService.getNextDate());
             matchesList.add(newMatch);
         }
         return matchesList;

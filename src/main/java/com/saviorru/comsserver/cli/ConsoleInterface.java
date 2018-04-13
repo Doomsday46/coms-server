@@ -2,7 +2,7 @@ package com.saviorru.comsserver.cli;
 
 import com.saviorru.comsserver.domain.tournament.TournamentBuilder;
 import com.saviorru.comsserver.domain.tournament.TournamentManager;
-import com.saviorru.comsserver.localization.TextProgram;
+import com.saviorru.comsserver.localization.SingletonResourceBundle;
 
 import java.time.format.DateTimeParseException;
 import java.util.ResourceBundle;
@@ -14,9 +14,9 @@ public class ConsoleInterface {
         Scanner scanner = new Scanner(System.in);
         String command = "";
         TournamentService tournamentService = new TournamentService(new TournamentBuilder(),new TournamentManager(),new CommandFactory());
-        Interpreter controller = new Interpreter();
-        new TextProgram("programText");
-        ResourceBundle resourceBundle = TextProgram.getResourceBundle();
+       // Interpreter controller = new Interpreter();
+        new SingletonResourceBundle("programText");
+        ResourceBundle resourceBundle = SingletonResourceBundle.getResourceBundle();
         System.out.println(resourceBundle.getObject("startApp"));
         while(true) {
             System.out.println(resourceBundle.getObject("enterCommand"));

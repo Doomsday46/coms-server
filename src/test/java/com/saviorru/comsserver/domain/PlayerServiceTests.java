@@ -1,13 +1,13 @@
 package com.saviorru.comsserver.domain;
 import com.saviorru.comsserver.domain.model.Player;
-import com.saviorru.comsserver.domain.dispatcher.PlayerDispatcher;
+import com.saviorru.comsserver.domain.dispatcher.PlayerService;
 import org.junit.Before;
 import org.junit.Test;
 import static org.mockito.Mockito.*;
 import static junit.framework.TestCase.*;
 
-public class PlayerDispatcherTests {
-    private PlayerDispatcher testSubject;
+public class PlayerServiceTests {
+    private PlayerService testSubject;
     private Player player1;
     private Player player2;
     private Player player3;
@@ -15,7 +15,7 @@ public class PlayerDispatcherTests {
     @Before
     public void initTest()
     {
-        testSubject = new PlayerDispatcher();
+        testSubject = new PlayerService();
         player1 = mock(Player.class);
         player2 = mock(Player.class);
         player3 = mock(Player.class);

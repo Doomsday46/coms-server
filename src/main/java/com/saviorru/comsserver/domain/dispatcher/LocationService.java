@@ -2,16 +2,17 @@ package com.saviorru.comsserver.domain.dispatcher;
 
 import com.saviorru.comsserver.domain.model.Location;
 import com.saviorru.comsserver.exceptions.FoundObjectException;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.DuplicateFormatFlagsException;
 import java.util.List;
-
-public class LocationDispatcher {
+@Service
+public class LocationService {
     private List<Location> locationsList;
 
 
-    public LocationDispatcher() {
+    public LocationService() {
         this.locationsList = new ArrayList<Location>();
     }
 

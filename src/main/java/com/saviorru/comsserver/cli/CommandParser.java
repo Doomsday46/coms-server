@@ -1,30 +1,40 @@
 package com.saviorru.comsserver.cli;
 
+import com.saviorru.comsserver.cli.command.Command;
+import com.saviorru.comsserver.cli.command.CommandInfo;
 import com.saviorru.comsserver.domain.schematictype.SchemeType;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class CommandParser {
     private CommandRules commandRules;
     private List<String> rawArguments;
     private String nameCommand;
-    public CommandParser(CommandRules commandRules){
-        this.commandRules = commandRules;
+    private Map<String, CommandInfo> commandMap;
+
+
+    public CommandParser(){
+        initCommandsMap();
+        commandRules = new CommandRules();
+        for (Map.Entry<String, CommandInfo> entry : this.commandMap.entrySet()) {
+            commandRules.addParsingRule(entry.getKey(), entry.getValue().getArgumentsList());
+        }
     }
 
-    public CommandParameter parse(String commandLine){
+    public Command parse(String commandLine){
         if (commandLine.isEmpty()) return null;
         rawArguments = new ArrayList<>();
         List<ArgumentType> argumentTypes = parseString(commandLine);
         if (rawArguments.size() != argumentTypes.size())
             throw new IllegalArgumentException("Invalid arguments count");
-        return getCommandParameters(argumentTypes,commandLine);
+        return new CommandFactory(getCommandParameters(argumentTypes,commandLine));
     }
+
+
+
 
     private CommandParameter getCommandParameters(List<ArgumentType> argumentTypes,String commandLine){
         List<Object> parsedArguments = new ArrayList<>();
@@ -100,6 +110,25 @@ public class CommandParser {
         if(rawField.equals("olympic")) return SchemeType.OLYMPIC;
         if(rawField.equals("round")) return SchemeType.ROUND;
         throw new IllegalArgumentException("expected type scheme");
+    }
+
+    private  void initCommandsMap() {
+        commandMap = new HashMap<>();
+        commandMap.put("undo", new CommandInfo("undo", new ArrayList<>(), "command"));
+        commandMap.put("start", new CommandInfo("start", new ArrayList<>(), "command"));
+        commandMap.put("finish", new CommandInfo("finish", new ArrayList<>(), "command"));
+        commandMap.put("show grid", new CommandInfo("show grid", new ArrayList<>(), "command"));
+        commandMap.put("show schedule", new CommandInfo("show schedule", new ArrayList<>(), "command"));
+        commandMap.put("show players", new CommandInfo("show players", new ArrayList<>(), "command"));
+        commandMap.put("show locations", new CommandInfo("show locations", new ArrayList<>(), "command"));
+        commandMap.put("set match result", new CommandInfo("set match result", Arrays.asList(ArgumentType.DIGIT, ArgumentType.DIGIT, ArgumentType.DIGIT), "command: matchNumber, number, number"));
+        commandMap.put("set player", new CommandInfo("set player", Arrays.asList(ArgumentType.ALPHA_DIGIT, ArgumentType.ALPHA_DIGIT, ArgumentType.DATE), "command: first name, second name, yyyy-mm-dd"));
+        commandMap.put("set location", new CommandInfo("set location", Arrays.asList(ArgumentType.ALPHA_DIGIT, ArgumentType.ALPHA_DIGIT), "command: name location, description"));
+        commandMap.put("set setting", new CommandInfo("set setting",Arrays.asList(ArgumentType.ALPHA_DIGIT, ArgumentType.SCHEME, ArgumentType.DATE_TIME),"command: tournament name, type scheme (olympic/round ...), date start (yyyy-mm-dd-hh-mm)"));
+        commandMap.put("create tournament", new CommandInfo("create tournament",new ArrayList<>(),"command"));
+        commandMap.put("help", new CommandInfo("help",new ArrayList<>(),"command"));
+        commandMap.put("report", new CommandInfo("report",new ArrayList<>(),"command"));
+        commandMap.put("choose tournament", new CommandInfo("choose tournament",Arrays.asList(ArgumentType.ALPHA_DIGIT),"command"));
     }
 }
 

@@ -18,7 +18,7 @@ public class SetPlayerCommand implements Command {
 
     @Override
     public Boolean execute(){
-        tournamentBuilder.getPlayerDispatcher().addPlayer(new Player((String) commandParameter.getParameter(0),
+        tournamentBuilder.getPlayerService().addPlayer(new Player((String) commandParameter.getParameter(0),
                                                                      (String) commandParameter.getParameter(1),
                                                                      (LocalDate) commandParameter.getParameter(2)));
         return true;

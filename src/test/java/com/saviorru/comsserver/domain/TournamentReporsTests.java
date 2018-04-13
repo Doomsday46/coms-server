@@ -1,8 +1,8 @@
 package com.saviorru.comsserver.domain;
 
-import com.saviorru.comsserver.domain.dispatcher.DateDispatcher;
-import com.saviorru.comsserver.domain.dispatcher.LocationDispatcher;
-import com.saviorru.comsserver.domain.dispatcher.PlayerDispatcher;
+import com.saviorru.comsserver.domain.dispatcher.DateService;
+import com.saviorru.comsserver.domain.dispatcher.LocationService;
+import com.saviorru.comsserver.domain.dispatcher.PlayerService;
 import com.saviorru.comsserver.domain.model.Location;
 import com.saviorru.comsserver.domain.model.Score;
 import com.saviorru.comsserver.domain.model.Player;
@@ -25,10 +25,10 @@ public class TournamentReporsTests {
     private final int countPlayers = 8;
     private List<Player> playerList;
     private List<Location> locationList;
-    private LocationDispatcher locationDispatcher;
+    private LocationService locationService;
     private Schedule schedule;
-    private PlayerDispatcher playerDispatcher;
-    private DateDispatcher dateDispatcher;
+    private PlayerService playerService;
+    private DateService dateService;
     private SchemeType schemeType;
     private TournamentSettings settings;
     private TimeSettings timeSettings;
@@ -44,17 +44,17 @@ public class TournamentReporsTests {
         locationList.add(new Location("table1", "1"));
         locationList.add(new Location("table2", "2"));
         locationList.add(new Location("table3", "3"));
-        locationDispatcher  = new LocationDispatcher();
-        playerDispatcher = new PlayerDispatcher();
-        dateDispatcher = new DateDispatcher(LocalDateTime.now(),new TimeSettings(10,18,1));
+        locationService = new LocationService();
+        playerService = new PlayerService();
+        dateService = new DateService(LocalDateTime.now(),new TimeSettings(10,18,1));
         schedule = new ScheduleImpl();
-        locationDispatcher.addAllLocation(locationList);
-        playerDispatcher.addPlayers(playerList);
+        locationService.addAllLocation(locationList);
+        playerService.addPlayers(playerList);
         schemeType = SchemeType.OLYMPIC;
         timeSettings = new TimeSettings(10, 18, 1);
         schemeType = SchemeType.OLYMPIC;
         settings = new TournamentSettingsImpl("Tournament1" ,schemeType, LocalDateTime.now(),timeSettings);
-        tournament = new TennisTournament( playerDispatcher, locationDispatcher, settings, schedule);
+        tournament = new TennisTournament(playerService, locationService, settings, schedule);
     }
 
     @Test()

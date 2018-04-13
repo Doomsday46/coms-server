@@ -16,7 +16,7 @@ public class SetLocationCommand implements Command {
 
     @Override
     public Boolean execute(){
-        tournamentBuilder.getLocationDispatcher().addLocation(new Location((String)commandParameter.getParameter(0),(String)commandParameter.getParameter(1)));
+        tournamentBuilder.getLocationService().addLocation(new Location((String)commandParameter.getParameter(0),(String)commandParameter.getParameter(1)));
         return true;
     }
 

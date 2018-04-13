@@ -1,7 +1,6 @@
 package com.saviorru.comsserver.domain;
 
-import com.saviorru.comsserver.domain.*;
-import com.saviorru.comsserver.domain.dispatcher.DateDispatcher;
+import com.saviorru.comsserver.domain.dispatcher.DateService;
 import com.saviorru.comsserver.domain.schematictype.SchemeType;
 import com.saviorru.comsserver.domain.tournament.TournamentSettings;
 import com.saviorru.comsserver.domain.tournament.TournamentSettingsImpl;
@@ -31,7 +30,7 @@ public class TournamentSettingsTests {
     @Test()
     public void settingsGetDateDispatherTest() throws Exception
     {
-        DateDispatcher dd = testSubject.getDateDispatcher();
+        DateService dd = testSubject.getDateDispatcher();
         assertFalse(dd==null);
     }
     @Test()

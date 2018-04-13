@@ -1,19 +1,16 @@
 package com.saviorru.comsserver.domain.tournament;
 
 import com.saviorru.comsserver.domain.MatchState;
-import com.saviorru.comsserver.domain.dispatcher.DateDispatcher;
-import com.saviorru.comsserver.domain.dispatcher.LocationDispatcher;
-import com.saviorru.comsserver.domain.dispatcher.PlayerDispatcher;
+import com.saviorru.comsserver.domain.dispatcher.LocationService;
+import com.saviorru.comsserver.domain.dispatcher.PlayerService;
 import com.saviorru.comsserver.domain.model.*;
 import com.saviorru.comsserver.domain.schedule.Schedule;
 import com.saviorru.comsserver.domain.schedule.ScheduleGenerator;
 import com.saviorru.comsserver.domain.schedule.ScheduleGeneratorImpl;
 import com.saviorru.comsserver.domain.schematictype.*;
 import com.saviorru.comsserver.domain.winnerindetifier.WinnerIdentifier;
-import com.saviorru.comsserver.exceptions.EmptyParameter;
 import com.saviorru.comsserver.exceptions.FinishTournamentException;
 import com.saviorru.comsserver.exceptions.StartTournamentException;
-import sun.invoke.empty.Empty;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -22,9 +19,9 @@ import java.util.List;
 public class TennisTournament implements Tournament {
 
 
-    private LocationDispatcher locationDispatcher;
+    private LocationService locationService;
     private Schedule schedule;
-    private PlayerDispatcher playerDispatcher;
+    private PlayerService playerService;
     private boolean isStart;
     private List<PrizePlace> prizePlaces;
     private ScheduleGenerator scheduleGenerator;
@@ -32,28 +29,28 @@ public class TennisTournament implements Tournament {
     private TournamentSettings tournamentSettings;
 
 
-    public TennisTournament(PlayerDispatcher playerDispatcher, LocationDispatcher locationDispatcher, TournamentSettings tournamentSettings, Schedule schedule) {
-        if (playerDispatcher == null || locationDispatcher == null || schedule == null || tournamentSettings == null)
+    public TennisTournament(PlayerService playerService, LocationService locationService, TournamentSettings tournamentSettings, Schedule schedule) {
+        if (playerService == null || locationService == null || schedule == null || tournamentSettings == null)
             throw new NullPointerException();
-        if (playerDispatcher.getAllPlayers().isEmpty() || locationDispatcher.getAllLocations().isEmpty())
+        if (playerService.getAllPlayers().isEmpty() || locationService.getAllLocations().isEmpty())
             throw new IllegalArgumentException("Empty parameter");
-        if (playerDispatcher.getAllPlayers().size() < 2 || locationDispatcher.getAllLocations().size() < 1)
+        if (playerService.getAllPlayers().size() < 2 || locationService.getAllLocations().size() < 1)
             throw new IllegalArgumentException("Not enough players or tables");
-        this.playerDispatcher = playerDispatcher;
+        this.playerService = playerService;
         this.schedule = schedule;
-        this.locationDispatcher = locationDispatcher;
+        this.locationService = locationService;
         this.isStart = false;
         this.tournamentSettings = tournamentSettings;
-        if(tournamentSettings.getPrizePlacesCount() > playerDispatcher.getAllPlayers().size()) tournamentSettings.setPrizePlacesCount(playerDispatcher.getAllPlayers().size());
+        if(tournamentSettings.getPrizePlacesCount() > playerService.getAllPlayers().size()) tournamentSettings.setPrizePlacesCount(playerService.getAllPlayers().size());
         this.prizePlaces = new ArrayList<>();
         generationSchedule();
     }
 
     private TennisTournament(TennisTournament target) {
         if (target != null) {
-            this.playerDispatcher = target.playerDispatcher;
+            this.playerService = target.playerService;
             this.schedule = target.schedule;
-            this.locationDispatcher = target.locationDispatcher;
+            this.locationService = target.locationService;
             this.isStart = target.isStart;
             this.winnerIdentifier = target.winnerIdentifier;
             this.prizePlaces = target.prizePlaces;
@@ -64,12 +61,6 @@ public class TennisTournament implements Tournament {
 
     private void generationSchedule() {
         this.winnerIdentifier = tournamentSettings.getWinnerIdentifier();
-        generate(tournamentSettings.getScheme(playerDispatcher.getAllPlayers().size()));
-    }
-
-    private void generate(Scheme scheme) {
-        this.scheduleGenerator = new ScheduleGeneratorImpl(this.playerDispatcher, this.locationDispatcher, tournamentSettings.getDateDispatcher(), scheme);
-        this.schedule = this.scheduleGenerator.generateSchedule();
     }
 
     @Override
@@ -79,7 +70,7 @@ public class TennisTournament implements Tournament {
 
     @Override
     public List<Player> getPlayers() {
-        return this.playerDispatcher.getAllPlayers();
+        return this.playerService.getAllPlayers();
     }
 
     @Override
@@ -91,7 +82,7 @@ public class TennisTournament implements Tournament {
     @Override
     public List<Location> getLocations() {
         if (isStart) throw new StartTournamentException("Tournament is not started");
-        return locationDispatcher.getAllLocations();
+        return locationService.getAllLocations();
     }
 
     @Override
@@ -144,7 +135,7 @@ public class TennisTournament implements Tournament {
         if (!(isStart)) throw new StartTournamentException("Tournament is not started");
         match.setPoints(score.getPointsFirstSide(), score.getPointsSecondSide());
         match.setMatchState(MatchState.PLAYED);
-        this.locationDispatcher.freeLocation(match.getLocation());
+        this.locationService.freeLocation(match.getLocation());
         this.schedule = this.scheduleGenerator.updateSchedule(match, this.schedule);
     }
 

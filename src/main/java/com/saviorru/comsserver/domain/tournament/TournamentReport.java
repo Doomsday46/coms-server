@@ -1,6 +1,6 @@
 package com.saviorru.comsserver.domain.tournament;
 
-import com.saviorru.comsserver.localization.TextProgram;
+import com.saviorru.comsserver.localization.SingletonResourceBundle;
 import com.saviorru.comsserver.domain.model.Match;
 import com.saviorru.comsserver.domain.model.Player;
 import com.saviorru.comsserver.domain.schematictype.SchemeType;
@@ -109,36 +109,36 @@ public class TournamentReport {
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder();
-        result.append(TextProgram.getResourceBundle().getString("dateRC")).append(": ").append(reportDate.format(DateTimeFormatter.ofPattern("dd.LL.yyyy HH:mm"))).append("\n");
-        result.append(TextProgram.getResourceBundle().getString("nameTournament")).append(": ").append(getTournamentName()).append("\n");
-        result.append(TextProgram.getResourceBundle().getString("dateSt")).append(": ").append(startDate.format(DateTimeFormatter.ofPattern("dd.LL.yyyy HH:mm"))).append("\n");
-        result.append(TextProgram.getResourceBundle().getString("dateEnd")).append(": ");
+        result.append(SingletonResourceBundle.getResourceBundle().getString("dateRC")).append(": ").append(reportDate.format(DateTimeFormatter.ofPattern("dd.LL.yyyy HH:mm"))).append("\n");
+        result.append(SingletonResourceBundle.getResourceBundle().getString("nameTournament")).append(": ").append(getTournamentName()).append("\n");
+        result.append(SingletonResourceBundle.getResourceBundle().getString("dateSt")).append(": ").append(startDate.format(DateTimeFormatter.ofPattern("dd.LL.yyyy HH:mm"))).append("\n");
+        result.append(SingletonResourceBundle.getResourceBundle().getString("dateEnd")).append(": ");
         if (endDate == null)
-            result.append(TextProgram.getResourceBundle().getString("tournamentNotFinish")).append("\n");
+            result.append(SingletonResourceBundle.getResourceBundle().getString("tournamentNotFinish")).append("\n");
         else
             result.append(endDate.format(DateTimeFormatter.ofPattern("dd.LL.yyyy HH:mm"))).append("\n");
-        result.append(TextProgram.getResourceBundle().getString("tournamentSystem")).append(": ");
+        result.append(SingletonResourceBundle.getResourceBundle().getString("tournamentSystem")).append(": ");
         switch (schemeType) {
             case ROUND:
-                result.append(TextProgram.getResourceBundle().getString("roundScheme")).append("\n");
+                result.append(SingletonResourceBundle.getResourceBundle().getString("roundScheme")).append("\n");
                 break;
             case OLYMPIC:
-                result.append(TextProgram.getResourceBundle().getString("olympicScheme")).append("\n");
+                result.append(SingletonResourceBundle.getResourceBundle().getString("olympicScheme")).append("\n");
                 break;
         }
-        result.append(TextProgram.getResourceBundle().getString("prizersTournament")).append("\n");
+        result.append(SingletonResourceBundle.getResourceBundle().getString("prizersTournament")).append("\n");
         for (int i = 0; i < prizeWinners.size(); i++) {
             result.append(i + 1).append(". ");
             if (prizeWinners.get(i) != null)
                 result.append(prizeWinners.get(i).toString());
             result.append("\n");
         }
-        result.append(TextProgram.getResourceBundle().getString("ratingPlayersTournament")).append(": ").append("\n");
+        result.append(SingletonResourceBundle.getResourceBundle().getString("ratingPlayersTournament")).append(": ").append("\n");
         for (int i = 0; i < playerScoresTable.size(); i++) {
             result.append(+(i + 1)).append(".  ").append(playerScoresTable.get(i).getKey().toString()).append("   ").append(playerScoresTable.get(i).getValue().toString()).append("\n");
         }
         result.append("\n" + "\n");
-        result.append(TextProgram.getResourceBundle().getString("historyMatch")).append(": ").append("\n");
+        result.append(SingletonResourceBundle.getResourceBundle().getString("historyMatch")).append(": ").append("\n");
         for (int i = 0; i < matchesHistory.size(); i++) {
             result.append(i + 1).append(".  ").append(matchesHistory.get(i).toString());
         }

@@ -21,7 +21,7 @@ public class InteractiveMenu {
         scanner = new Scanner(System.in);
         commandLine = "";
         tournamentService = new TournamentService(new TournamentBuilder(), new TournamentManager(), new CommandFactory());
-        controller = new Interpreter();
+        controller = new InterpreterVitaliyStyle();
         this.resourceBundle = resourceBundle;
     }
 

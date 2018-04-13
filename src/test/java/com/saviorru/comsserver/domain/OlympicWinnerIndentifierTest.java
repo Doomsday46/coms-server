@@ -1,6 +1,6 @@
 package com.saviorru.comsserver.domain;
 
-import com.saviorru.comsserver.domain.dispatcher.DateDispatcher;
+import com.saviorru.comsserver.domain.dispatcher.DateService;
 import com.saviorru.comsserver.domain.model.Location;
 import com.saviorru.comsserver.domain.model.Match;
 import com.saviorru.comsserver.domain.model.OneOnOneMatch;
@@ -21,7 +21,7 @@ public class OlympicWinnerIndentifierTest {
     private List<Player> playerList;
     private List<Location> locationList;
     private List<Match> matchList;
-    private DateDispatcher dateDispatcher;
+    private DateService dateService;
     private WinnerIdentifier winnerIdentifier;
 
     @Before
@@ -29,13 +29,13 @@ public class OlympicWinnerIndentifierTest {
         playerList = new ArrayList<>();
         locationList = new ArrayList<>();
         matchList = new ArrayList<>();
-        dateDispatcher = new DateDispatcher(LocalDateTime.now(), new TimeSettings(10, 18, 1));
+        dateService = new DateService(LocalDateTime.now(), new TimeSettings(10, 18, 1));
         for (int i = 0; i < 8; i++) {
             playerList.add(new Player("Andrey" + i, "Momp", LocalDate.of(1950 + i, 1, 1)));
             locationList.add(new Location("Table" + i, ""));
         }
         for (int i = 0,j = 0; i < 8; i += 2,j++) {
-            matchList.add(new OneOnOneMatch(playerList.get(i), playerList.get(i + 1), locationList.get(0), dateDispatcher.getNextDate().plusHours(j)));
+            matchList.add(new OneOnOneMatch(playerList.get(i), playerList.get(i + 1), locationList.get(0), dateService.getNextDate().plusHours(j)));
             matchList.get(j).setPoints(10,11);
             matchList.get(j).setMatchState(MatchState.PLAYED);
         }

@@ -1,7 +1,7 @@
 package com.saviorru.comsserver.domain.tournament;
 
 import com.saviorru.comsserver.domain.TimeSettings;
-import com.saviorru.comsserver.domain.dispatcher.DateDispatcher;
+import com.saviorru.comsserver.domain.dispatcher.DateService;
 import com.saviorru.comsserver.domain.schematictype.OlympicScheme;
 import com.saviorru.comsserver.domain.schematictype.RoundScheme;
 import com.saviorru.comsserver.domain.schematictype.Scheme;
@@ -43,8 +43,8 @@ public class TournamentSettingsImpl implements TournamentSettings {
         this.prizePlacesCount = prizePlacesCount;
     }
     @Override
-    public DateDispatcher getDateDispatcher()  {
-        return new DateDispatcher(startDate, timeSettings);
+    public DateService getDateDispatcher()  {
+        return new DateService(startDate, timeSettings);
     }
 
     @Override

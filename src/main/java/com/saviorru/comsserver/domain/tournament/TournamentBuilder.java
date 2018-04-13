@@ -1,46 +1,55 @@
 package com.saviorru.comsserver.domain.tournament;
 
 import com.saviorru.comsserver.domain.TimeSettings;
-import com.saviorru.comsserver.domain.dispatcher.LocationDispatcher;
-import com.saviorru.comsserver.domain.dispatcher.PlayerDispatcher;
+import com.saviorru.comsserver.domain.dispatcher.LocationService;
+import com.saviorru.comsserver.domain.dispatcher.PlayerService;
 import com.saviorru.comsserver.domain.schedule.Schedule;
 import com.saviorru.comsserver.domain.schedule.ScheduleImpl;
 
 public class TournamentBuilder {
 
-    private PlayerDispatcher playerDispatcher;
-    private LocationDispatcher locationDispatcher;
+    private PlayerService playerService;
+    private LocationService locationService;
     private Schedule schedule;
     private TournamentSettings tournamentSettings;
     private TimeSettings timeSettings;
-    private Tournament tournament;
 
     public TournamentBuilder() {
-        playerDispatcher = new PlayerDispatcher();
-        locationDispatcher = new LocationDispatcher();
-        schedule = new ScheduleImpl();
     }
 
-    public PlayerDispatcher getPlayerDispatcher() {
-        return playerDispatcher;
+    public PlayerService getPlayerService() {
+        return playerService;
     }
 
-    public TournamentBuilder setPlayer(PlayerDispatcher playerDispatcher) {
-        this.playerDispatcher = playerDispatcher;
+    public Tournament build(){
+        return new TennisTournament(playerService, locationService,tournamentSettings,schedule);
+    }
+
+    public TournamentBuilder clearBuilder(){
+        return new TournamentBuilder();
+    }
+
+    public TournamentBuilder setPlayerService(PlayerService playerService) {
+        this.playerService = playerService;
         return this;
     }
 
-    public LocationDispatcher getLocationDispatcher() {
-        return locationDispatcher;
+    public LocationService getLocationService() {
+        return locationService;
     }
 
-    public TournamentBuilder setLocationDispatcher(LocationDispatcher locationDispatcher) {
-        this.locationDispatcher = locationDispatcher;
+    public TournamentBuilder setLocationService(LocationService locationService) {
+        this.locationService = locationService;
         return this;
     }
 
     public Schedule getSchedule() {
         return schedule;
+    }
+
+    public TournamentBuilder setSchedule(Schedule schedule) {
+        this.schedule = schedule;
+        return this;
     }
 
     public TournamentSettings getTournamentSettings() {
@@ -61,20 +70,4 @@ public class TournamentBuilder {
         return this;
     }
 
-    public Tournament getTournament() {
-        return tournament;
-    }
-
-    public TournamentBuilder setTournament(Tournament tournament) {
-        this.tournament = tournament;
-        return this;
-    }
-
-    public Tournament build(){
-        return new TennisTournament(playerDispatcher,locationDispatcher,tournamentSettings,schedule);
-    }
-
-    public TournamentBuilder clearBuilder(){
-        return new TournamentBuilder();
-    }
 }

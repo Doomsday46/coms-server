@@ -1,6 +1,5 @@
 package com.saviorru.comsserver.domain;
 
-import com.saviorru.comsserver.domain.tournament.TournamentSettings;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
@@ -17,7 +16,7 @@ import org.junit.runners.Suite;
         DateDispatherTests.class,
         RoundWinnerIdentifierTests.class,
         RoundSchemeTests.class,
-        PlayerDispatcherTests.class,
+        PlayerServiceTests.class,
         OlympicGridTest.class,
         TournamentSettingsTests.class,
         TournamentReporsTests.class,

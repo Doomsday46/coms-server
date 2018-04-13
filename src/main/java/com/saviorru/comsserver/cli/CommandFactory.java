@@ -7,36 +7,36 @@ import com.saviorru.comsserver.domain.tournament.TournamentManager;
 
 public class CommandFactory {
 
-    public Command getCommand(TournamentManager tournamentManager, TournamentBuilder tournamentBuilder, CommandParameter commandParameter) {
-        Tournament tournament = tournamentManager.getActiveTournament();
+
+    public Command getCommand(CommandParameter commandParameter) {
         switch (commandParameter.getNameCommand()) {
             case "set player":
-                return new SetPlayerCommand(tournamentBuilder, commandParameter);
+                return new SetPlayerCommand(commandParameter);
             case "show schedule": {
-                return new ShowScheduleCommand(tournament);
+                return new ShowScheduleCommand();
             }
             case "show players":
-                return new ShowPlayersCommand(tournament);
+                return new ShowPlayersCommand();
             case "show locations":
-                return new ShowLocationCommand(tournament);
+                return new ShowLocationCommand();
             case "set location":
-                return new SetLocationCommand(tournamentBuilder, commandParameter);
+                return new SetLocationCommand(commandParameter);
             case "start":
-                return new StartTournamentCommand(tournament);
+                return new StartTournamentCommand();
             case "finish":
-                return new FinishTournamentCommand(tournament);
+                return new FinishTournamentCommand();
             case "create tournament":
-                return new CreateTennisTournamentCommand(tournamentManager, tournamentBuilder);
+                return new CreateTennisTournamentCommand();
             case "set match result":
-                return new SetMatchResultCommand(tournament, commandParameter);
+                return new SetMatchResultCommand(commandParameter);
             case "set setting":
-                return new SetSettingTournamentCommand(tournamentBuilder, commandParameter);
+                return new SetSettingTournamentCommand(commandParameter);
             case "show grid":
-                return new ShowGridCommand(tournament);
+                return new ShowGridCommand();
             case "report":
-                return new ReportCommand(tournament);
+                return new ReportCommand();
             case "choose tournament":
-                return new ChooseTournamentCommand(tournamentManager, commandParameter);
+                return new ChooseTournamentCommand(commandParameter);
         }
         throw new NullPointerException("Command not found");
     }

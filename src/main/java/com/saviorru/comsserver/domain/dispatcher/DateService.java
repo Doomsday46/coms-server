@@ -1,17 +1,21 @@
 package com.saviorru.comsserver.domain.dispatcher;
 
 import com.saviorru.comsserver.domain.TimeSettings;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-
-public class DateDispatcher {
+@Service
+public class DateService {
 
     private LocalDateTime startDate;
     private LocalDateTime endDate;
     private TimeSettings timeSettings;
 
-    public DateDispatcher(LocalDateTime startDate, TimeSettings timeSettings)
+    public DateService()
     {
+    }
+
+    public void setTimeSetting(LocalDateTime startDate, TimeSettings timeSettings){
         if (startDate == null) throw new NullPointerException();
         this.startDate = startDate;
         this.timeSettings = timeSettings;

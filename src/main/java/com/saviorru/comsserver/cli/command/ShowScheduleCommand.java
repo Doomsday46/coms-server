@@ -1,6 +1,6 @@
 package com.saviorru.comsserver.cli.command;
 
-import com.saviorru.comsserver.localization.TextProgram;
+import com.saviorru.comsserver.localization.SingletonResourceBundle;
 import com.saviorru.comsserver.domain.model.Match;
 import com.saviorru.comsserver.domain.tournament.Tournament;
 
@@ -37,24 +37,24 @@ public class ShowScheduleCommand implements Command {
     private void printSchedule(List<Match> matches){
         int count = 0;
         for (Match match : matches) {
-            String isPlayedMatch = (match.isPlayed()) ? TextProgram.getResourceBundle().getString("text.played") : TextProgram.getResourceBundle().getString("text.notPlayed");
+            String isPlayedMatch = (match.isPlayed()) ? SingletonResourceBundle.getResourceBundle().getString("text.played") : SingletonResourceBundle.getResourceBundle().getString("text.notPlayed");
             count++;
             if (!match.isPlayed()) {
-                System.out.println(TextProgram.getResourceBundle().getString("numberMatch") + ": " + count);
-                System.out.println(TextProgram.getResourceBundle().getString("text.player") + " 1: " + match.getFirstSide());
-                System.out.println(TextProgram.getResourceBundle().getString("text.player") + " 2: " + match.getSecondSide());
-                System.out.println(TextProgram.getResourceBundle().getString("dateMatch") + ": " + match.getDate().format(DateTimeFormatter.ofPattern("dd.LL.yyyy HH:mm")));
-                System.out.println(TextProgram.getResourceBundle().getString("statusMatch") + ": " + isPlayedMatch);
+                System.out.println(SingletonResourceBundle.getResourceBundle().getString("numberMatch") + ": " + count);
+                System.out.println(SingletonResourceBundle.getResourceBundle().getString("text.player") + " 1: " + match.getFirstSide());
+                System.out.println(SingletonResourceBundle.getResourceBundle().getString("text.player") + " 2: " + match.getSecondSide());
+                System.out.println(SingletonResourceBundle.getResourceBundle().getString("dateMatch") + ": " + match.getDate().format(DateTimeFormatter.ofPattern("dd.LL.yyyy HH:mm")));
+                System.out.println(SingletonResourceBundle.getResourceBundle().getString("statusMatch") + ": " + isPlayedMatch);
             } else {
 
-                System.out.println(TextProgram.getResourceBundle().getString("numberMatch") + ": " + count);
-                System.out.println(TextProgram.getResourceBundle().getString("text.player") + " 1: " + match.getFirstSide());
-                System.out.println(TextProgram.getResourceBundle().getString("text.player") + " 2: " + match.getSecondSide());
-                System.out.println(TextProgram.getResourceBundle().getString("dateMatch") + ": " + match.getDate().format(DateTimeFormatter.ofPattern("dd.LL.yyyy HH:mm")));
-                System.out.println(TextProgram.getResourceBundle().getString("statusMatch") + ": " + isPlayedMatch);
-                System.out.println(TextProgram.getResourceBundle().getString("scoreFP") + ": " + match.getPointsFirstSide());
-                System.out.println(TextProgram.getResourceBundle().getString("scoreSP") + ": " + match.getPointsSecondSide());
-                System.out.println(TextProgram.getResourceBundle().getString("winner") + ": " + match.getWinner());
+                System.out.println(SingletonResourceBundle.getResourceBundle().getString("numberMatch") + ": " + count);
+                System.out.println(SingletonResourceBundle.getResourceBundle().getString("text.player") + " 1: " + match.getFirstSide());
+                System.out.println(SingletonResourceBundle.getResourceBundle().getString("text.player") + " 2: " + match.getSecondSide());
+                System.out.println(SingletonResourceBundle.getResourceBundle().getString("dateMatch") + ": " + match.getDate().format(DateTimeFormatter.ofPattern("dd.LL.yyyy HH:mm")));
+                System.out.println(SingletonResourceBundle.getResourceBundle().getString("statusMatch") + ": " + isPlayedMatch);
+                System.out.println(SingletonResourceBundle.getResourceBundle().getString("scoreFP") + ": " + match.getPointsFirstSide());
+                System.out.println(SingletonResourceBundle.getResourceBundle().getString("scoreSP") + ": " + match.getPointsSecondSide());
+                System.out.println(SingletonResourceBundle.getResourceBundle().getString("winner") + ": " + match.getWinner());
             }
         }
     }

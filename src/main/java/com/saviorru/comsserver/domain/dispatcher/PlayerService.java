@@ -2,14 +2,16 @@ package com.saviorru.comsserver.domain.dispatcher;
 
 import com.saviorru.comsserver.domain.model.Player;
 import com.saviorru.comsserver.exceptions.FoundObjectException;
+import org.springframework.stereotype.Service;
 
 import java.util.*;
 
-public class PlayerDispatcher {
+@Service
+public class PlayerService {
 
     private Map<Player, Integer> playersNumbersMap;
 
-    public PlayerDispatcher()
+    public PlayerService()
     {
         this.playersNumbersMap = new HashMap<>();
     }
