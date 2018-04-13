@@ -1,9 +1,10 @@
 package com.saviorru.comsserver.cli;
 
 import com.saviorru.comsserver.cli.command.*;
-import com.saviorru.comsserver.domain.tournament.Tournament;
-import com.saviorru.comsserver.domain.tournament.TournamentBuilder;
-import com.saviorru.comsserver.domain.tournament.TournamentManager;
+import com.saviorru.comsserver.domain.model.Location;
+import com.saviorru.comsserver.domain.model.Player;
+
+import java.time.LocalDate;
 
 public class CommandFactory {
 
@@ -11,7 +12,9 @@ public class CommandFactory {
     public Command getCommand(CommandParameter commandParameter) {
         switch (commandParameter.getNameCommand()) {
             case "set player":
-                return new SetPlayerCommand(commandParameter);
+                return new AddPlayerCommand(new Player((String) commandParameter.getParameter(0),
+                                                        (String) commandParameter.getParameter(1),
+                                                        (LocalDate) commandParameter.getParameter(3)));
             case "show schedule": {
                 return new ShowScheduleCommand();
             }
@@ -20,7 +23,8 @@ public class CommandFactory {
             case "show locations":
                 return new ShowLocationCommand();
             case "set location":
-                return new SetLocationCommand(commandParameter);
+                return new AddLocationCommand(new Location((String) commandParameter.getParameter(0),
+                                                            (String) commandParameter.getParameter(1)));
             case "start":
                 return new StartTournamentCommand();
             case "finish":
@@ -28,9 +32,9 @@ public class CommandFactory {
             case "create tournament":
                 return new CreateTennisTournamentCommand();
             case "set match result":
-                return new SetMatchResultCommand(commandParameter);
+                return new AddMatchResultCommand(commandParameter);
             case "set setting":
-                return new SetSettingTournamentCommand(commandParameter);
+                return new AddSettingTournamentCommand(commandParameter);
             case "show grid":
                 return new ShowGridCommand();
             case "report":

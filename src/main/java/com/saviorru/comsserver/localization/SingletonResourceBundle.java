@@ -5,16 +5,13 @@ import java.util.ResourceBundle;
 
 public class SingletonResourceBundle {
 
-    private static ResourceBundle resourceBundle;
+    private static ResourceBundle resourceBundle = ResourceBundle.getBundle("programText");
 
     public SingletonResourceBundle(String resource, Locale locale){
         SingletonResourceBundle.resourceBundle = ResourceBundle.getBundle(resource,locale);
     }
     public SingletonResourceBundle(String resource){
         SingletonResourceBundle.resourceBundle = ResourceBundle.getBundle(resource);
-    }
-    public SingletonResourceBundle(){
-        SingletonResourceBundle.resourceBundle = ResourceBundle.getBundle("programText");
     }
 
     public static ResourceBundle getResourceBundle() {

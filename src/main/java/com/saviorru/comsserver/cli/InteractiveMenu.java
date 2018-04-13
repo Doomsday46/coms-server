@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 public class InteractiveMenu {
     private TournamentService tournamentService;
-    private Interpreter controller;
+    private CommandParser commandParser;
     private Scanner scanner;
     private String commandLine;
     private int countElement;
@@ -21,7 +21,7 @@ public class InteractiveMenu {
         scanner = new Scanner(System.in);
         commandLine = "";
         tournamentService = new TournamentService(new TournamentBuilder(), new TournamentManager(), new CommandFactory());
-        controller = new InterpreterVitaliyStyle();
+        commandParser = new CommandParser();
         this.resourceBundle = resourceBundle;
     }
 
@@ -52,7 +52,7 @@ public class InteractiveMenu {
                 commandLine = scanner.nextLine();
 
                 try {
-                    if (tournamentService.executeCommand(controller.parse(commandLine)))
+                    if (commandParser.parse(commandLine).execute())
                         System.out.println(resourceBundle.getObject("done"));
                 } catch (IllegalArgumentException | NullPointerException e) {
                     System.out.println(e.getMessage());
@@ -151,7 +151,7 @@ public class InteractiveMenu {
 
     private void executeCommand(String string) {
         try {
-            if (tournamentService.executeCommand(controller.parse(string)))  System.out.println(resourceBundle.getObject("done"));;
+            if (commandParser.parse(string).execute())  System.out.println(resourceBundle.getObject("done"));;
             countElement++;
         } catch (IllegalArgumentException | NullPointerException e) {
             System.out.println(e.getMessage());

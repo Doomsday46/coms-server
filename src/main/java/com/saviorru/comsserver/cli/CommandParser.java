@@ -30,7 +30,7 @@ public class CommandParser {
         List<ArgumentType> argumentTypes = parseString(commandLine);
         if (rawArguments.size() != argumentTypes.size())
             throw new IllegalArgumentException("Invalid arguments count");
-        return new CommandFactory(getCommandParameters(argumentTypes,commandLine));
+        return new CommandFactory().getCommand(getCommandParameters(argumentTypes,commandLine));
     }
 
 
@@ -128,7 +128,7 @@ public class CommandParser {
         commandMap.put("create tournament", new CommandInfo("create tournament",new ArrayList<>(),"command"));
         commandMap.put("help", new CommandInfo("help",new ArrayList<>(),"command"));
         commandMap.put("report", new CommandInfo("report",new ArrayList<>(),"command"));
-        commandMap.put("choose tournament", new CommandInfo("choose tournament",Arrays.asList(ArgumentType.ALPHA_DIGIT),"command"));
+        commandMap.put("choose tournament", new CommandInfo("choose tournament", Collections.singletonList(ArgumentType.ALPHA_DIGIT),"command"));
     }
 }
 

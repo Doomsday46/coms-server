@@ -9,12 +9,12 @@ import com.saviorru.comsserver.domain.tournament.TournamentSettingsImpl;
 
 import java.time.LocalDateTime;
 
-public class SetSettingTournamentCommand implements Command {
+public class AddSettingTournamentCommand implements Command {
 
     private TournamentBuilder tournamentBuilder;
     private CommandParameter commandParameter;
 
-    public SetSettingTournamentCommand(TournamentBuilder tournamentBuilder, CommandParameter commandParameter) {
+    public AddSettingTournamentCommand(TournamentBuilder tournamentBuilder, CommandParameter commandParameter) {
         this.tournamentBuilder = tournamentBuilder;
         this.commandParameter = commandParameter;
     }

@@ -5,13 +5,13 @@ import com.saviorru.comsserver.domain.model.Match;
 import com.saviorru.comsserver.domain.model.Score;
 import com.saviorru.comsserver.domain.tournament.Tournament;
 
-public class SetMatchResultCommand implements Command {
+public class AddMatchResultCommand implements Command {
 
     private Score score;
     private Tournament tournament;
     private Integer matchNumber;
 
-    public SetMatchResultCommand(Tournament tournament, CommandParameter commandParameter) throws NullPointerException,IllegalArgumentException {
+    public AddMatchResultCommand(Tournament tournament, CommandParameter commandParameter) throws NullPointerException,IllegalArgumentException {
         if ((Integer)commandParameter.getParameter(1) < 0 || (Integer)commandParameter.getParameter(2) < 0) throw new IllegalArgumentException("Score less than zero");
         if (tournament == null) throw new NullPointerException("Tournament not created");
         this.tournament = tournament;
